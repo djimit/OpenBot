@@ -1,0 +1,90 @@
+.ob-mcp-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ob-mcp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-0-5);
+  padding: var(--ob-space-2);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-base);
+}
+
+.ob-mcp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-2);
+}
+
+.ob-mcp-name {
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-medium);
+}
+
+.ob-mcp-right {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1);
+}
+
+.ob-mcp-target {
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-mcp-draft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  padding: var(--ob-space-2-5);
+  border: 1px dashed var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+}
+
+.ob-mcp-draft-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ob-space-1-5);
+}
+.ob-connector-catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.ob-connector-card {
+  display: grid;
+  gap: 3px;
+  padding: 10px;
+  border: 1px solid var(--ob-border);
+  border-radius: 10px;
+  background: var(--ob-bg-raised-2);
+  color: var(--ob-text-primary);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ob-connector-card:hover:not(:disabled) { border-color: var(--ob-accent); }
+.ob-connector-card:disabled { opacity: .45; cursor: default; }
+/* `--ob-text-muted` is not a token this app defines, so these labels rendered at
+   full body colour instead of muted. The real token is `--ob-text-tertiary`. */
+.ob-connector-card span { color: var(--ob-text-tertiary); font-size: 11px; line-height: 1.35; }
+
+/* The card says outright what it cannot fill in, so it is not read as a
+   one-click connector that then presents a dead submit button. */
+.ob-connector-card em { color: var(--ob-text-disabled); font-size: 10px; font-style: normal; }
+
+.ob-mcp-await { margin-top: var(--ob-space-1); }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Hardened-runtime entitlements for the signed macOS build.
+
+  electron-builder turns the hardened runtime on by default, and the hardened
+  runtime denies these by default even when Info.plist carries the matching
+  usage string. Each entry below is here because something in OpenBOT stops
+  working without it on a distributed (signed) build, while a local unsigned
+  `npm run pack` shows no symptom at all:
+
+    apple-events        every osascript call in the computer-use tools —
+                        clicking, typing, reading windows — is an Apple event.
+    allow-jit           V8's JIT in both the main and renderer processes.
+    unsigned-executable-memory, allow-dyld-environment-variables,
+    disable-library-validation
+                        required by Electron's own framework loading; without
+                        them the app fails to launch once signed.
+    device.audio-input, device.camera
+                        paired with the NSMicrophone/NSCamera usage strings in
+                        package.json. The renderer permission handler denies
+                        both at runtime unless a bot is explicitly given them,
+                        so this only avoids a hard kill by the OS when a
+                        request is made.
+
+  Deliberately absent: `com.apple.security.app-sandbox`. OpenBOT spawns the
+  user's locally installed agent CLIs and reads the directories the user picks,
+  neither of which is expressible in the App Sandbox. This build targets direct
+  distribution, not the Mac App Store.
+-->
+<plist version="1.0">
+  <dict>
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <true/>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+    <key>com.apple.security.device.camera</key>
+    <true/>
+  </dict>
+</plist>

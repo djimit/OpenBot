@@ -1,0 +1,51 @@
+/* Bot picker for `@` in the composer. Anchored above the input so it never
+   covers what the user is typing. */
+.ob-mention {
+  position: absolute;
+  bottom: calc(100% + var(--ob-space-2));
+  left: 0;
+  z-index: 40;
+  width: min(320px, 100%);
+  max-height: 260px;
+  overflow-y: auto;
+  padding: var(--ob-space-1);
+  background: var(--ob-bg-raised-2);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-xl);
+  box-shadow: var(--ob-shadow-popover);
+}
+
+.ob-mention-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  width: 100%;
+  min-height: 32px;
+  padding: 0 var(--ob-space-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-lg);
+  color: var(--ob-text-primary);
+  font-size: var(--ob-font-size-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ob-mention-item.is-active {
+  background: var(--ob-bg-hover);
+}
+
+.ob-mention-name {
+  font-weight: var(--ob-weight-medium);
+  flex: 0 0 auto;
+}
+
+.ob-mention-desc {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+}

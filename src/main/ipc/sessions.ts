@@ -1,0 +1,131 @@
+/** IPC for `OpenBotApi.sessions`. */
+
+import { randomUUID } from 'node:crypto'
+import type { Session, SessionSummary } from '../../shared/types'
+import { getProject, unlinkSessionFromCards } from '../store/projects'
+import { removeRoom, sharedRooms } from '../store/rooms'
+import { stopCollaborationServer } from '../collaboration/server'
+import {
+  addBotToSession,
+  archiveSession,
+  unarchiveSession,
+  createSession,
+  getSession,
+  listSessions,
+  removeBotFromSession,
+  removeSession,
+  renameSession,
+  setActiveBot,
+  setSessionCwd,
+  setSessionMode,
+  setSessionProject,
+  toggleMessageReaction
+} from '../store/sessions'
+import { defaultCwd } from '../store/sessionSchema'
+import { broadcast } from './broadcast'
+import { CHANNELS } from './channels'
+import { emptyArray, handle, handleVoid, nullResult } from './handler'
+import { asAbsolutePath, asId, asIdArray, asMode, asOptionalId, asString } from './validate'
+
+/** Shape returned when `create` fails outright, so the renderer still renders. */
+function placeholderSession(): Session {
+  const now = Date.now()
+  return {
+    id: randomUUID(),
+    title: 'New Chat',
+    cwd: defaultCwd(),
+    mode: 'agent',
+    botIds: [],
+    activeBotId: '',
+    messages: [],
+    todos: [],
+    createdAt: now,
+    updatedAt: now
+  }
+}
+
+/** Tell every window a session changed, so open views stay in step. */
+function announce(session: Session | null): void {
+  if (session) broadcast({ type: 'session-updated', session })
+}
+
+export function registerSessionIpc(): void {
+  handle<SessionSummary[]>(CHANNELS.sessionsList, () => listSessions(), emptyArray)
+
+  handle<Session | null>(CHANNELS.sessionsGet, ([id]) => getSession(asId(id)), nullResult)
+
+  handle<Session>(
+    CHANNELS.sessionsCreate,
+    ([botIds]) => {
+      const session = createSession(asIdArray(botIds))
+      announce(session)
+      return session
+    },
+    placeholderSession
+  )
+
+  handleVoid(CHANNELS.sessionsRename, ([id, title]) => {
+    announce(renameSession(asId(id), asString(title, 200)))
+  })
+
+  handleVoid(CHANNELS.sessionsArchive, ([id]) => {
+    announce(archiveSession(asId(id)))
+  })
+
+  /*
+   * Deleting a chat closes any room shared from it.
+   *
+   * A room binds to a sessionId, and nothing cascaded: the room stayed enabled,
+   * so `sharedRooms()` never emptied and the `0.0.0.0` listener stayed bound
+   * for the life of the app. The Rooms panel went on listing a live invite URL
+   * for a conversation that no longer existed.
+   *
+   * A kanban card binds to a sessionId the same way, and broke the same way:
+   * the card kept the dead id, opening it failed forever, and nothing in the UI
+   * could clear it.
+   */
+  handleVoid(CHANNELS.sessionsRemove, async ([id]) => {
+    const sessionId = asId(id)
+    removeSession(sessionId)
+    unlinkSessionFromCards(sessionId)
+    for (const room of sharedRooms()) {
+      if (room.sessionId === sessionId) removeRoom(room.id)
+    }
+    if (sharedRooms().length === 0) await stopCollaborationServer()
+  })
+
+  handleVoid(CHANNELS.sessionsSetMode, ([id, mode]) => {
+    announce(setSessionMode(asId(id), asMode(mode)))
+  })
+
+  handleVoid(CHANNELS.sessionsAddBot, ([id, botId]) => {
+    announce(addBotToSession(asId(id), asId(botId)))
+  })
+
+  handleVoid(CHANNELS.sessionsRemoveBot, ([id, botId]) => {
+    announce(removeBotFromSession(asId(id), asId(botId)))
+  })
+
+  handleVoid(CHANNELS.sessionsSetActiveBot, ([id, botId]) => {
+    announce(setActiveBot(asId(id), asId(botId)))
+  })
+
+  handleVoid(CHANNELS.sessionsUnarchive, ([id]) => {
+    announce(unarchiveSession(asId(id)))
+  })
+
+  handleVoid(CHANNELS.sessionsSetCwd, ([id, cwd]) => {
+    announce(setSessionCwd(asId(id), asAbsolutePath(cwd)))
+  })
+
+  /** Null unfiles the chat. Filing into a project that is gone is refused. */
+  handleVoid(CHANNELS.sessionsSetProject, ([id, projectId]) => {
+    const target = asOptionalId(projectId) ?? null
+    if (target && !getProject(target)) throw new TypeError(`unknown project: ${target}`)
+    announce(setSessionProject(asId(id), target))
+  })
+
+  handleVoid(CHANNELS.sessionsReact, ([id, messageId, emoji, actor]) => {
+    announce(toggleMessageReaction(asId(id), asId(messageId), asString(emoji, 16), actor === undefined ? 'You' : asString(actor, 80)))
+  })
+}

@@ -1,0 +1,82 @@
+@import './tokens.css';
+
+/* Global element baseline only. Control primitives live in controls.css,
+   status primitives in feedback.css, everything else beside its component. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--ob-font-sans);
+  font-size: var(--ob-font-size-base);
+  line-height: var(--ob-line-height-base);
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-chrome);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ob-accent);
+  outline-offset: 1px;
+  border-radius: var(--ob-radius-sm);
+}
+
+::selection {
+  background: var(--ob-accent-secondary);
+}
+
+::-webkit-scrollbar {
+  width: var(--ob-space-2-5);
+  height: var(--ob-space-2-5);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ob-border-strong);
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: var(--ob-radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ob-text-disabled);
+  background-clip: content-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,239 @@
+/*
+ * OpenBOT design tokens.
+ * Primitives are declared once; every semantic value is derived from them with
+ * color-mix() so that flipping the surface/base pair is all a theme has to do.
+ * Components must reference --ob-* tokens only — never a literal colour.
+ */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* ── Primitives ──────────────────────────────────────────────────
+     Reference product is monochrome-on-black: pure black ground, white
+     text, neutral controls. Hues are reserved for STATE (working, error,
+     diffs) and for bot identity — never for general chrome. */
+  --ob-base: #ffffff; /* foreground */
+  --ob-accent: #e8a33d; /* warm amber: active/working states */
+  --ob-chrome: #000000; /* titlebar / window chrome */
+  --ob-editor: #0a0a0a; /* main content surface */
+  --ob-sidebar: #000000;
+
+  --ob-success: #3fa266;
+  --ob-added: #70b489;
+  --ob-danger: #e34671;
+  --ob-removed: #fc6b83;
+  --ob-red: #fc6b83;
+  --ob-warn: #f1b467;
+  --ob-modified: #f1b467;
+  --ob-yellow: #f1b467;
+  --ob-blue: #7bafe9;
+  --ob-cyan: #88c0d0;
+  --ob-purple: #9386f2;
+  --ob-magenta: #b48ead;
+  --ob-orange: #d08770;
+  --ob-green: #3fa266;
+
+  --ob-shadow-primary: color-mix(in srgb, #000 20%, transparent);
+
+  /* ── Syntax (highlight.js) ─────────────────────────────────────── */
+  --ob-syntax-bg: #141414;
+  --ob-syntax-fg: #d6d6dd;
+  --ob-syntax-keyword: #82d2ce;
+  --ob-syntax-string: #e394dc;
+  --ob-syntax-function: #efb080;
+  --ob-syntax-number: #ebc88d;
+  --ob-syntax-constant: #f8c762;
+  --ob-syntax-comment: #e4e4e45e;
+  --ob-syntax-link: #87c3ff;
+  --ob-syntax-punctuation: #d6d6dd;
+
+  /* ── Diff ──────────────────────────────────────────────────────── */
+  --ob-diff-added-line: #3fa26633;
+  --ob-diff-added-text: #3fa26622;
+  --ob-diff-removed-line: #b8004933;
+  --ob-diff-removed-text: #b8004922;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --ob-base: #1a1a1a;
+  --ob-accent: #2b6cb8;
+  --ob-chrome: #f5f5f5;
+  --ob-editor: #ffffff;
+  --ob-sidebar: #ffffff;
+
+  --ob-success: #2f8552;
+  --ob-added: #3d8a5f;
+  --ob-danger: #c62f58;
+  --ob-removed: #c62f58;
+  --ob-red: #c62f58;
+  --ob-warn: #b57620;
+  --ob-modified: #b57620;
+  --ob-yellow: #b57620;
+  --ob-blue: #2b6cb8;
+  --ob-cyan: #337f92;
+  --ob-purple: #6355c9;
+  --ob-magenta: #8a5f83;
+  --ob-orange: #b05c3e;
+  --ob-green: #2f8552;
+
+  --ob-shadow-primary: color-mix(in srgb, #000 14%, transparent);
+
+  --ob-syntax-bg: color-mix(in srgb, var(--ob-base) 3%, var(--ob-editor));
+  --ob-syntax-fg: #24242b;
+  --ob-syntax-keyword: #1f7a75;
+  --ob-syntax-string: #a03d94;
+  --ob-syntax-function: #a85a24;
+  --ob-syntax-number: #8a6412;
+  --ob-syntax-constant: #8a6412;
+  --ob-syntax-comment: #1a1a1a66;
+  --ob-syntax-link: #2b6cb8;
+  --ob-syntax-punctuation: #24242b;
+
+  --ob-diff-added-line: #3fa2662e;
+  --ob-diff-added-text: #3fa2661f;
+  --ob-diff-removed-line: #b800492e;
+  --ob-diff-removed-text: #b800491f;
+}
+
+/* ── Derived semantics (identical in every theme) ─────────────────── */
+:root {
+  /* Text tiers */
+  --ob-text-primary: var(--ob-base);
+  --ob-text-secondary: color-mix(in srgb, var(--ob-base) 70%, transparent);
+  --ob-text-tertiary: color-mix(in srgb, var(--ob-base) 50%, transparent);
+  --ob-text-disabled: color-mix(in srgb, var(--ob-base) 35%, transparent);
+  --ob-text-on-accent: var(--ob-chrome);
+
+  /* Surfaces */
+  --ob-bg-chrome: var(--ob-chrome);
+  --ob-bg-editor: var(--ob-editor);
+  --ob-bg-sidebar: var(--ob-sidebar);
+  --ob-bg-raised: color-mix(in srgb, var(--ob-base) 6%, var(--ob-editor));
+  --ob-bg-raised-2: color-mix(in srgb, var(--ob-base) 10%, var(--ob-editor));
+  /* Card surface: the reference UI's primary content container — a lifted
+     panel on the black ground, generous radius, no heavy border. */
+  --ob-bg-card: color-mix(in srgb, var(--ob-base) 8%, var(--ob-editor));
+  --ob-bg-hover: color-mix(in srgb, var(--ob-base) 10%, var(--ob-editor));
+  --ob-bg-active: color-mix(in srgb, var(--ob-base) 16%, transparent);
+  --ob-bg-focused: color-mix(in srgb, var(--ob-base) 22%, transparent);
+  --ob-bg-overlay: color-mix(in srgb, var(--ob-chrome) 62%, transparent);
+  --ob-bg-input: color-mix(in srgb, var(--ob-base) 6%, transparent);
+
+  /* Hairlines */
+  --ob-border-subtle: color-mix(in srgb, var(--ob-base) 8%, transparent);
+  --ob-border: color-mix(in srgb, var(--ob-base) 12%, transparent);
+  --ob-border-strong: color-mix(in srgb, var(--ob-base) 24%, transparent);
+
+  /* Hue ramps: secondary 24% · tertiary 12% · quaternary 8% */
+  --ob-accent-secondary: color-mix(in srgb, var(--ob-accent) 24%, transparent);
+  --ob-accent-tertiary: color-mix(in srgb, var(--ob-accent) 12%, transparent);
+  --ob-accent-quaternary: color-mix(in srgb, var(--ob-accent) 8%, transparent);
+  --ob-accent-hover: color-mix(in srgb, var(--ob-base) 10%, var(--ob-accent));
+
+  --ob-success-secondary: color-mix(in srgb, var(--ob-success) 24%, transparent);
+  --ob-success-tertiary: color-mix(in srgb, var(--ob-success) 12%, transparent);
+  --ob-success-quaternary: color-mix(in srgb, var(--ob-success) 8%, transparent);
+
+  --ob-danger-secondary: color-mix(in srgb, var(--ob-danger) 24%, transparent);
+  --ob-danger-tertiary: color-mix(in srgb, var(--ob-danger) 12%, transparent);
+  --ob-danger-quaternary: color-mix(in srgb, var(--ob-danger) 8%, transparent);
+  --ob-danger-hover: color-mix(in srgb, var(--ob-base) 10%, var(--ob-danger));
+
+  --ob-warn-secondary: color-mix(in srgb, var(--ob-warn) 24%, transparent);
+  --ob-warn-tertiary: color-mix(in srgb, var(--ob-warn) 12%, transparent);
+  --ob-warn-quaternary: color-mix(in srgb, var(--ob-warn) 8%, transparent);
+
+  --ob-purple-tertiary: color-mix(in srgb, var(--ob-purple) 12%, transparent);
+  --ob-cyan-tertiary: color-mix(in srgb, var(--ob-cyan) 12%, transparent);
+
+  /* ── Typography ─────────────────────────────────────────────────
+     --ob-font-size-base is overridden at runtime by the font-size
+     setting; every other step derives from it. */
+  --ob-font-size-base: 15px;
+  --ob-font-size-xs: calc(var(--ob-font-size-base) - 4px);
+  --ob-font-size-sm: calc(var(--ob-font-size-base) - 2px);
+  --ob-font-size-lg: calc(var(--ob-font-size-base) + 2px);
+  --ob-font-size-xl: calc(var(--ob-font-size-base) + 5px);
+  --ob-font-size-2xl: calc(var(--ob-font-size-base) + 9px);
+  /* Marketing-weight display type for empty states and onboarding. */
+  --ob-font-size-display: calc(var(--ob-font-size-base) + 17px);
+  --ob-font-size-hero: calc(var(--ob-font-size-base) + 33px);
+
+  --ob-line-height-xs: calc(var(--ob-font-size-base) + 1px);
+  --ob-line-height-sm: calc(var(--ob-font-size-base) + 4px);
+  --ob-line-height-base: calc(var(--ob-font-size-base) + 7px);
+  --ob-line-height-lg: calc(var(--ob-font-size-base) + 11px);
+  --ob-line-height-prose: calc(var(--ob-font-size-base) + 10px);
+
+  --ob-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --ob-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ob-weight-normal: 400;
+  --ob-weight-medium: 500;
+  --ob-weight-semibold: 600;
+
+  /* ── Radius ─────────────────────────────────────────────────────── */
+  --ob-radius-xs: 2px;
+  --ob-radius-sm: 4px;
+  --ob-radius-base: 6px;
+  --ob-radius-lg: 8px;
+  --ob-radius-xl: 12px;
+  --ob-radius-2xl: 14px;
+  --ob-radius-3xl: 16px;
+  --ob-radius-full: 9999px;
+
+  /* ── Spacing: 4px grid with quarter steps ───────────────────────── */
+  --ob-space-0-25: 1px;
+  --ob-space-0-5: 2px;
+  --ob-space-0-75: 3px;
+  --ob-space-1: 4px;
+  --ob-space-1-25: 5px;
+  --ob-space-1-5: 6px;
+  --ob-space-1-75: 7px;
+  --ob-space-2: 8px;
+  --ob-space-2-25: 9px;
+  --ob-space-2-5: 10px;
+  --ob-space-2-75: 11px;
+  --ob-space-3: 12px;
+  --ob-space-3-25: 13px;
+  --ob-space-3-5: 14px;
+  --ob-space-4: 16px;
+  --ob-space-4-5: 18px;
+  --ob-space-5: 20px;
+  --ob-space-6: 24px;
+  --ob-space-7: 28px;
+  --ob-space-8: 32px;
+  --ob-space-9: 36px;
+  --ob-space-10: 40px;
+  --ob-space-12: 48px;
+  --ob-space-14: 56px;
+  --ob-space-16: 64px;
+  --ob-space-20: 80px;
+
+  /* ── Controls ─────────────────────────────────────────────────────
+     Reference product uses roomy, pill-shaped controls — not IDE rows. */
+  --ob-height-xs: 24px;
+  --ob-height-sm: 30px;
+  --ob-height-base: 36px;
+  --ob-height-lg: 44px;
+  --ob-titlebar-height: 52px;
+  --ob-sidebar-width: 272px;
+  --ob-rail-width: 320px;
+  --ob-content-max: 720px;
+  /* Default control shape. Pills are a signature of the reference UI. */
+  --ob-control-radius: var(--ob-radius-full);
+  --ob-card-radius: var(--ob-radius-3xl);
+  --ob-card-padding: var(--ob-space-6);
+
+  /* ── Shadows ────────────────────────────────────────────────────── */
+  --ob-shadow-workbench: 0 0 8px 2px color-mix(in srgb, var(--ob-shadow-primary) 40%, transparent);
+  --ob-shadow-popover: 0 2px 12px 2px color-mix(in srgb, var(--ob-shadow-primary) 70%, transparent);
+  --ob-shadow-modal: 0 8px 40px 4px color-mix(in srgb, var(--ob-shadow-primary) 90%, transparent);
+
+  /* ── Motion ─────────────────────────────────────────────────────── */
+  --ob-transition-fast: 90ms ease;
+  --ob-transition-base: 140ms ease;
+}

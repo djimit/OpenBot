@@ -1,0 +1,11 @@
+.ob-permissions-sandbox {
+  align-items: flex-start;
+  padding: var(--ob-space-2);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-base);
+}
+.ob-permissions-sandbox .ob-hint {
+  display: inline;
+}
+

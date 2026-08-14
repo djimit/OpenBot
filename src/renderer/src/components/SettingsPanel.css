@@ -1,0 +1,55 @@
+.ob-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-3);
+}
+
+.ob-settings-tabs {
+  display: flex;
+  gap: var(--ob-space-0-5);
+  padding-bottom: var(--ob-space-1);
+  border-bottom: 1px solid var(--ob-border-subtle);
+}
+
+.ob-settings-tab {
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-2);
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-tertiary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-sm);
+  cursor: pointer;
+}
+.ob-settings-tab:hover {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-active);
+}
+.ob-settings-tab.is-active {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-focused);
+}
+
+.ob-settings-panel {
+  min-height: 0;
+}
+
+.ob-settings-range {
+  width: 220px;
+  accent-color: var(--ob-accent);
+}
+
+.ob-settings-select {
+  width: 200px;
+}
+
+.ob-settings-privacy {
+  margin-top: var(--ob-space-2);
+  padding: var(--ob-space-2-5);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-base);
+  color: var(--ob-text-secondary);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-lg);
+}

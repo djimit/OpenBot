@@ -1,0 +1,99 @@
+/* Shared status primitives: pills, notices, empty states, spinners.
+   Colour appears here and nowhere else in the chrome — it marks state
+   (working, failed, added/removed) and identity, never decoration. */
+
+.ob-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  height: var(--ob-height-xs);
+  padding: 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-secondary);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-full);
+  white-space: nowrap;
+}
+.ob-pill-ok {
+  color: var(--ob-success);
+  background: var(--ob-success-tertiary);
+}
+.ob-pill-warn {
+  color: var(--ob-warn);
+  background: var(--ob-warn-tertiary);
+}
+.ob-pill-bad {
+  color: var(--ob-danger);
+  background: var(--ob-danger-tertiary);
+}
+.ob-pill-accent {
+  color: var(--ob-accent);
+  background: var(--ob-accent-tertiary);
+}
+.ob-pill-entity {
+  color: var(--ob-purple);
+  background: var(--ob-purple-tertiary);
+}
+
+/* Empty states are a feature of this product, not a footnote. */
+.ob-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ob-space-4);
+  padding: var(--ob-space-20) var(--ob-space-6);
+  text-align: center;
+}
+.ob-empty-title {
+  max-width: 20ch;
+  font-size: var(--ob-font-size-display);
+  line-height: 1.15;
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: -0.02em;
+  color: var(--ob-text-primary);
+}
+.ob-empty-body {
+  max-width: 46ch;
+  font-size: var(--ob-font-size-lg);
+  line-height: var(--ob-line-height-lg);
+  color: var(--ob-text-secondary);
+}
+
+.ob-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ob-space-2);
+  padding: var(--ob-space-4);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-base);
+  border: 0;
+  border-radius: var(--ob-radius-3xl);
+  color: var(--ob-text-secondary);
+  background: var(--ob-bg-card);
+}
+.ob-notice-error {
+  color: var(--ob-danger);
+  background: var(--ob-danger-quaternary);
+}
+
+.ob-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ob-spin {
+  animation: ob-spin 800ms linear infinite;
+}
+@keyframes ob-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,95 @@
+.ob-transcript {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ob-transcript-scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.ob-transcript-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-4);
+  width: 100%;
+  max-width: var(--ob-content-max);
+  margin: 0 auto;
+  padding: var(--ob-space-6) var(--ob-space-6) var(--ob-space-12);
+}
+
+/*
+ * Consecutive bot turns are one exchange, so they sit closer together than a
+ * new user request does. A uniform gap made a back-and-forth read as unrelated
+ * messages with dead space between them.
+ */
+.ob-transcript-content > .ob-msg-assistant + .ob-msg-assistant {
+  margin-top: calc(var(--ob-space-2) * -1);
+}
+
+/* A user turn starts a new beat: give it room above. */
+.ob-transcript-content > .ob-msg-user {
+  margin-top: var(--ob-space-3);
+}
+
+.ob-transcript-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ob-space-2);
+  padding: var(--ob-space-20);
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-base);
+}
+
+/* The empty transcript is the product's first impression: centred, roomy,
+   display-weight headline. */
+.ob-transcript-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ob-space-4);
+  min-height: 52vh;
+  padding: var(--ob-space-10) 0;
+  text-align: center;
+}
+
+.ob-transcript-working {
+  display: flex;
+}
+
+.ob-transcript-error {
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-4);
+}
+
+.ob-transcript-jump {
+  position: absolute;
+  left: 50%;
+  bottom: var(--ob-space-4);
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  height: var(--ob-height-base);
+  padding: 0 var(--ob-space-5);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-secondary);
+  background: var(--ob-bg-raised-2);
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-control-radius);
+  box-shadow: var(--ob-shadow-popover);
+  cursor: pointer;
+}
+.ob-transcript-jump:hover {
+  color: var(--ob-text-primary);
+}

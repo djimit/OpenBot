@@ -1,0 +1,199 @@
+.ob-msg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+}
+
+.ob-msg-user {
+  align-items: flex-end;
+}
+
+.ob-msg-shell {
+  max-width: 100%;
+  min-width: 0;
+}
+.ob-msg-user .ob-msg-shell {
+  max-width: 82%;
+}
+
+.ob-msg-author {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2-5);
+}
+.ob-msg-author-name {
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-primary);
+}
+.ob-msg-model {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+}
+
+/* The user's turn sits on a lifted card; the assistant's flows on the ground. */
+.ob-msg-bubble {
+  padding: var(--ob-space-3-5) var(--ob-space-5);
+  font-size: var(--ob-font-size-base);
+  line-height: var(--ob-line-height-prose);
+  background: var(--ob-bg-card);
+  border-radius: var(--ob-card-radius);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ob-caret {
+  display: inline-block;
+  width: var(--ob-space-0-5);
+  height: var(--ob-font-size-base);
+  margin-left: var(--ob-space-1);
+  vertical-align: text-bottom;
+  background: var(--ob-accent);
+  border-radius: var(--ob-radius-xs);
+  animation: ob-caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes ob-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.ob-msg-tools {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  margin-top: var(--ob-space-4);
+}
+
+.ob-msg-attachments {
+  margin-top: var(--ob-space-3);
+}
+.ob-msg-attach-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  height: var(--ob-height-xs);
+  padding: 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  background: var(--ob-bg-input);
+  border: 0;
+  border-radius: var(--ob-radius-full);
+  cursor: pointer;
+}
+.ob-msg-attach-toggle:hover {
+  color: var(--ob-text-primary);
+}
+.ob-msg-attach-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ob-space-2);
+  margin: var(--ob-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ob-msg-attach-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  max-width: 100%;
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-xs);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-full);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ob-msg-attach-kind {
+  color: var(--ob-text-disabled);
+  text-transform: uppercase;
+}
+
+.ob-msg-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ob-space-2);
+  margin-top: var(--ob-space-3);
+  padding: var(--ob-space-3) var(--ob-space-4);
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-danger);
+  background: var(--ob-danger-quaternary);
+  border-radius: var(--ob-radius-3xl);
+}
+
+/*
+ * The footer stays in the layout while hidden so revealing it on hover does not
+ * shift the transcript. It is kept short deliberately: at full control height it
+ * reserved ~30px of dead space under every message, which read as a large
+ * unexplained gap between consecutive turns.
+ */
+.ob-msg-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  height: 18px;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+  opacity: 0;
+  transition: opacity var(--ob-transition-base);
+}
+.ob-msg:hover .ob-msg-foot,
+.ob-msg:focus-within .ob-msg-foot {
+  opacity: 1;
+}
+.ob-msg-reactions { display: inline-flex; gap: 3px; }
+.ob-msg-reactions button { padding: 1px 5px; border: 1px solid transparent; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; font-size: 10px; }
+.ob-msg-reactions button:hover, .ob-msg-reactions button.is-active { border-color: var(--ob-border); background: var(--ob-bg-hover); opacity: 1; }
+
+/* ── Handoff divider ──────────────────────────────────────────────── */
+
+.ob-handoff {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-3);
+  padding: var(--ob-space-2) 0;
+}
+.ob-handoff-line {
+  flex: 1;
+  height: 1px;
+  background: var(--ob-border-subtle);
+}
+.ob-handoff-body {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  max-width: 74%;
+}
+.ob-handoff-arrow {
+  color: var(--ob-text-disabled);
+}
+.ob-handoff-text {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ob-handoff-text strong {
+  color: var(--ob-text-secondary);
+  font-weight: var(--ob-weight-medium);
+}
+
+/* Reply link: shows that this turn answers a teammate, so a back-and-forth
+   reads as a thread rather than as unrelated messages in sequence. */
+.ob-msg-replying {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-normal);
+}
+
+.ob-msg-replying strong {
+  color: var(--ob-text-secondary);
+  font-weight: var(--ob-weight-medium);
+}

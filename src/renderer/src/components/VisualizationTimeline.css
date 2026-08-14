@@ -1,0 +1,98 @@
+/* Timelines: events on a single connected rail. Tone tokens and the shared frame live in Visualization.css. */
+
+.ob-viz-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ob-viz-event {
+  display: flex;
+  gap: var(--ob-space-3);
+  margin: 0;
+}
+
+/* The rail is a per-row column, so uneven row heights stay connected. */
+.ob-viz-event-rail {
+  position: relative;
+  flex: none;
+  width: var(--ob-space-3);
+}
+.ob-viz-event-rail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--ob-border-strong);
+  transform: translateX(-50%);
+}
+/* Trim the rail to the dot at both ends so it does not float past the list. */
+.ob-viz-event:first-child .ob-viz-event-rail::before {
+  top: var(--ob-space-1-5);
+}
+.ob-viz-event[data-last='true'] .ob-viz-event-rail::before {
+  bottom: auto;
+  height: var(--ob-space-1-5);
+}
+
+.ob-viz-event-dot {
+  position: absolute;
+  top: var(--ob-space-1-5);
+  left: 50%;
+  width: var(--ob-space-2-5);
+  height: var(--ob-space-2-5);
+  background: var(--ob-viz-tone);
+  border: 2px solid var(--ob-bg-card);
+  border-radius: var(--ob-radius-full);
+  transform: translate(-50%, -50%);
+  box-sizing: content-box;
+}
+
+.ob-viz-event-body {
+  min-width: 0;
+  flex: 1;
+  padding-bottom: var(--ob-space-3-5);
+}
+.ob-viz-event[data-last='true'] .ob-viz-event-body {
+  padding-bottom: 0;
+}
+
+.ob-viz-event-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ob-space-2-5);
+}
+
+/* `time` and `title` are both free text: neither may push the other out. */
+.ob-viz-event-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-sm);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.ob-viz-event-time {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 40%;
+  overflow: hidden;
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ob-text-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-viz-event-detail {
+  margin: var(--ob-space-0-5) 0 0;
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-text-secondary);
+  overflow-wrap: anywhere;
+}

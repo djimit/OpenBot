@@ -1,0 +1,121 @@
+.ob-bot-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-5);
+  height: 100%;
+  padding: var(--ob-card-padding);
+  background: var(--ob-bg-card);
+  border-radius: var(--ob-card-radius);
+}
+
+.ob-bot-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ob-bot-editor-head h3 {
+  font-size: var(--ob-font-size-lg);
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: -0.01em;
+}
+
+.ob-bot-editor-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-5);
+}
+
+.ob-bot-identity {
+  display: grid;
+  grid-template-columns: var(--ob-space-16) minmax(0, 1fr);
+  gap: var(--ob-space-3);
+}
+.ob-bot-emoji-input {
+  text-align: center;
+  font-size: var(--ob-font-size-lg);
+  padding: 0;
+}
+
+.ob-bot-emoji-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ob-space-1-5);
+}
+.ob-bot-emoji-chip {
+  width: var(--ob-height-sm);
+  height: var(--ob-height-sm);
+  font-size: var(--ob-font-size-base);
+  background: var(--ob-bg-input);
+  border: 0;
+  border-radius: var(--ob-radius-full);
+  cursor: pointer;
+}
+.ob-bot-emoji-chip:hover {
+  background: var(--ob-bg-active);
+}
+
+.ob-bot-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ob-space-2);
+}
+.ob-bot-swatch {
+  width: var(--ob-space-6);
+  height: var(--ob-space-6);
+  border: 0;
+  border-radius: var(--ob-radius-full);
+  cursor: pointer;
+}
+.ob-bot-swatch.is-active {
+  box-shadow:
+    0 0 0 2px var(--ob-bg-card),
+    0 0 0 4px var(--ob-text-secondary);
+}
+
+.ob-bot-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ob-space-2) var(--ob-space-4);
+  margin: 0 0 var(--ob-space-2);
+  padding: var(--ob-space-4);
+  border: 0;
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-3xl);
+}
+.ob-bot-tools legend {
+  padding: 0;
+  margin-bottom: var(--ob-space-1);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.ob-bot-tools .ob-check span {
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+}
+
+.ob-bot-computer {
+  align-items: flex-start;
+  padding: var(--ob-space-4);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-3xl);
+}
+.ob-bot-computer .ob-hint {
+  display: inline;
+}
+
+.ob-bot-editor-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-3);
+  padding-top: var(--ob-space-2);
+}
+.ob-bot-editor-save,
+.ob-bot-confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+}

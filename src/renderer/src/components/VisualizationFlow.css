@@ -1,0 +1,65 @@
+/* Flow diagrams: node boxes over an SVG arrow layer. Tone tokens and the shared frame live in Visualization.css. */
+
+.ob-viz-flow {
+  position: relative;
+  min-width: 100%;
+}
+
+.ob-viz-wires {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ob-viz-wires path {
+  fill: none;
+  stroke: var(--ob-border-strong);
+  stroke-width: 1.4;
+}
+.ob-viz-wires marker path {
+  fill: var(--ob-border-strong);
+  stroke: none;
+}
+.ob-viz-wires text {
+  fill: var(--ob-text-tertiary);
+  font-family: var(--ob-font-sans);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+  paint-order: stroke;
+  stroke: var(--ob-bg-card);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.ob-viz-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--ob-space-0-5);
+  padding: 0 var(--ob-space-3);
+  overflow: hidden;
+  text-align: center;
+  background: color-mix(in srgb, var(--ob-viz-tone) 14%, var(--ob-bg-raised));
+  border: 1px solid color-mix(in srgb, var(--ob-viz-tone) 45%, transparent);
+  border-radius: var(--ob-radius-xl);
+}
+
+.ob-viz-node-title {
+  overflow: hidden;
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-xs);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-viz-node-subtitle {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-xs);
+  color: var(--ob-text-secondary);
+}

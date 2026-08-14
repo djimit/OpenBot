@@ -1,0 +1,59 @@
+/* Bar charts: one labelled track per row. Tone tokens and the shared frame live in Visualization.css. */
+
+.ob-viz-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ob-viz-bar-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ob-space-2-5);
+  margin-bottom: var(--ob-space-1-5);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-xs);
+}
+
+.ob-viz-bar-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ob-text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Shrinks before the label does, and never pushes the value off the row. */
+.ob-viz-bar-detail {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ob-text-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-viz-bar-value {
+  flex: none;
+  font-family: var(--ob-font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--ob-text-secondary);
+}
+
+.ob-viz-bar-track {
+  height: var(--ob-space-2-5);
+  overflow: hidden;
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-full);
+}
+
+.ob-viz-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--ob-viz-tone);
+  border-radius: var(--ob-radius-full);
+}

@@ -1,0 +1,45 @@
+.ob-context {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  flex: 0 0 auto;
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-2-5);
+  border-radius: var(--ob-control-radius);
+  background: var(--ob-bg-input);
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  cursor: default;
+}
+
+.ob-context-track {
+  width: 28px;
+  height: 3px;
+  border-radius: var(--ob-radius-full);
+  background: color-mix(in srgb, var(--ob-base) 14%, transparent);
+  overflow: hidden;
+}
+
+.ob-context-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ob-text-tertiary);
+  transition: width var(--ob-transition-base);
+}
+
+/* Colour only once the window is genuinely filling up. */
+.ob-context.is-warn {
+  color: var(--ob-warn);
+}
+.ob-context.is-warn .ob-context-fill {
+  background: var(--ob-warn);
+}
+
+.ob-context.is-critical {
+  color: var(--ob-danger);
+}
+.ob-context.is-critical .ob-context-fill {
+  background: var(--ob-danger);
+}

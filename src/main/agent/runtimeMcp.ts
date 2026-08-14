@@ -1,0 +1,25 @@
+/**
+ * Which backends can be handed an MCP server for a single turn.
+ *
+ * Checked against the installed CLIs:
+ *   claude  `--mcp-config '<json>'` — inline JSON, http transport with headers
+ *   codex   `-c mcp_servers.<name>={url=…,bearer_token_env_var=…}`
+ *
+ * OpenCode reads MCP from config, but supports OPENCODE_CONFIG_CONTENT. Its
+ * adapter starts an ephemeral, per-turn server with that inline config, so the
+ * gateway token never touches the user's own opencode.json. Droid still needs a
+ * persistent config and pi has no MCP client.
+ *
+ * A list, not a guess: the gateway's HTTP listener is only started for a
+ * backend on it, so an unlisted CLI never leaves a port open for a client that
+ * will never connect. The other half of this pairing — how each of those two
+ * CLIs is actually told — is `backends/cli/mcpConfig.ts`; the two are kept
+ * apart because the agent package treats the backends package as an optional
+ * peer and cannot import it statically.
+ */
+
+const RUNTIME_MCP_BACKENDS: ReadonlySet<string> = new Set(['opencode', 'claude', 'codex'])
+
+export function acceptsRuntimeMcpServer(backendId: string): boolean {
+  return RUNTIME_MCP_BACKENDS.has(backendId)
+}

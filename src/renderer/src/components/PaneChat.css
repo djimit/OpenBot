@@ -1,0 +1,205 @@
+/*
+ * One conversation in a pane. The focused pane is the live one, so it is the
+ * only one that carries the accent edge — the ring is the answer to "which pane
+ * am I typing into?".
+ * The `.ob-pane-msg-*` rules below dress the read-only snapshot rendered by
+ * PaneChatSnapshot, which shares this pane's surface.
+ */
+
+.ob-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--ob-bg-editor);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-card-radius);
+  overflow: hidden;
+}
+.ob-pane.is-focused {
+  border-color: color-mix(in srgb, var(--ob-accent) 45%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ob-accent) 20%, transparent);
+}
+
+.ob-pane-head {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  padding: var(--ob-space-2) var(--ob-space-2) var(--ob-space-2) var(--ob-space-3);
+  border-bottom: 1px solid var(--ob-border-subtle);
+  background: var(--ob-bg-card);
+}
+
+.ob-pane-bots {
+  display: flex;
+  gap: var(--ob-space-0-5);
+  flex-shrink: 0;
+}
+
+.ob-pane-title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-pane-model {
+  flex-shrink: 0;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 12ch;
+}
+
+.ob-pane-flag {
+  flex-shrink: 0;
+  padding: var(--ob-space-0-25) var(--ob-space-2);
+  border-radius: var(--ob-radius-full);
+  background: color-mix(in srgb, var(--ob-accent) 16%, transparent);
+  color: var(--ob-accent);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+}
+
+.ob-pane-scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.ob-pane-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-3);
+  padding: var(--ob-space-3) var(--ob-space-3) var(--ob-space-6);
+}
+
+.ob-pane-foot {
+  border-top: 1px solid var(--ob-border-subtle);
+  background: var(--ob-bg-card);
+}
+
+/* The honest label on a copy: this pane is not the one being streamed into. */
+.ob-pane-note {
+  display: block;
+  width: 100%;
+  padding: var(--ob-space-1-5) var(--ob-space-3);
+  border: 0;
+  background: transparent;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--ob-transition-fast);
+}
+.ob-pane-note:hover {
+  color: var(--ob-text-primary);
+}
+
+.ob-pane-empty,
+.ob-pane-status {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  margin: 0;
+  padding: var(--ob-space-4) var(--ob-space-2);
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-tertiary);
+}
+.ob-pane-status-warn {
+  flex-wrap: wrap;
+  color: var(--ob-warn);
+}
+
+/* A snapshot renders only the tail of a long chat; this says so rather than
+   letting the pane look like the conversation started there. */
+.ob-pane-earlier {
+  margin: 0;
+  padding: var(--ob-space-1) var(--ob-space-2);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+  text-align: center;
+}
+
+/* — snapshot messages — */
+
+.ob-pane-msg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-1-5);
+  min-width: 0;
+}
+.ob-pane-msg-user {
+  align-items: flex-end;
+}
+
+.ob-pane-msg-author {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-secondary);
+}
+
+.ob-pane-bubble {
+  max-width: 85%;
+  padding: var(--ob-space-2) var(--ob-space-3);
+  background: var(--ob-bg-card);
+  border-radius: var(--ob-card-radius);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-prose);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ob-pane-tools {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ob-space-2);
+  margin: 0;
+  padding: var(--ob-space-1) var(--ob-space-2);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-lg);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+.ob-pane-tool-names {
+  min-width: 0;
+  font-family: var(--ob-font-mono);
+  color: var(--ob-text-disabled);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-pane-msg-error {
+  margin: 0;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-danger);
+}
+
+.ob-pane-msg-foot {
+  display: flex;
+  gap: var(--ob-space-2);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+}
+
+.ob-pane-handoff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ob-space-1-5);
+  margin: 0;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}

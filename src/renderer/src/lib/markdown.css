@@ -1,0 +1,197 @@
+/* Styles for the HTML that markdown.ts emits: prose, code frames, syntax. */
+
+.ob-md {
+  font-size: var(--ob-font-size-base);
+  line-height: var(--ob-line-height-prose);
+  overflow-wrap: anywhere;
+}
+
+.ob-md > * + * {
+  margin-top: var(--ob-space-4);
+}
+.ob-md p {
+  margin: 0;
+}
+.ob-md h1,
+.ob-md h2,
+.ob-md h3,
+.ob-md h4 {
+  margin: var(--ob-space-3) 0 0;
+  font-size: var(--ob-font-size-lg);
+  line-height: var(--ob-line-height-lg);
+  font-weight: var(--ob-weight-semibold);
+}
+.ob-md h3,
+.ob-md h4 {
+  font-size: var(--ob-font-size-base);
+}
+.ob-md ul,
+.ob-md ol {
+  margin: 0;
+  padding-left: var(--ob-space-5);
+}
+.ob-md li + li {
+  margin-top: var(--ob-space-0-5);
+}
+.ob-md a {
+  color: var(--ob-accent);
+  text-underline-offset: 2px;
+}
+.ob-md blockquote {
+  margin: 0;
+  padding-left: var(--ob-space-2-5);
+  border-left: 2px solid var(--ob-border-strong);
+  color: var(--ob-text-secondary);
+}
+.ob-md hr {
+  height: 1px;
+  margin: var(--ob-space-3) 0;
+  border: 0;
+  background: var(--ob-border);
+}
+.ob-md img {
+  max-width: 100%;
+  border-radius: var(--ob-radius-base);
+}
+.ob-md table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ob-font-size-sm);
+  display: block;
+  overflow-x: auto;
+}
+.ob-md th,
+.ob-md td {
+  padding: var(--ob-space-1) var(--ob-space-2);
+  border: 1px solid var(--ob-border);
+  text-align: left;
+}
+.ob-md th {
+  background: var(--ob-bg-input);
+  font-weight: var(--ob-weight-semibold);
+}
+.ob-md :not(pre) > code {
+  padding: var(--ob-space-0-5) var(--ob-space-1-5);
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-sm);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-base);
+}
+
+/* ── Code frame ───────────────────────────────────────────────────── */
+
+.ob-code {
+  margin: 0;
+  overflow: hidden;
+  background: var(--ob-syntax-bg);
+  border-radius: var(--ob-radius-3xl);
+}
+.ob-code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--ob-height-base);
+  padding: 0 var(--ob-space-2) 0 var(--ob-space-4);
+}
+.ob-code-lang {
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+.ob-code-copy {
+  height: var(--ob-height-xs);
+  padding: 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-full);
+  cursor: pointer;
+}
+.ob-code-copy:hover {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-active);
+}
+.ob-code-body {
+  margin: 0;
+  padding: 0 var(--ob-space-4) var(--ob-space-4);
+  overflow-x: auto;
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-syntax-fg);
+}
+.ob-code-body code {
+  font: inherit;
+}
+
+/* ── highlight.js tokens ──────────────────────────────────────────── */
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-meta-keyword,
+.hljs-doctag,
+.hljs-type {
+  color: var(--ob-syntax-keyword);
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-quote,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-meta .hljs-string {
+  color: var(--ob-syntax-string);
+}
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_,
+.hljs-section,
+.hljs-built_in {
+  color: var(--ob-syntax-function);
+}
+.hljs-number,
+.hljs-bullet {
+  color: var(--ob-syntax-number);
+}
+.hljs-literal,
+.hljs-variable.constant_,
+.hljs-template-variable,
+.hljs-meta {
+  color: var(--ob-syntax-constant);
+}
+.hljs-comment,
+.hljs-formula {
+  color: var(--ob-syntax-comment);
+  font-style: italic;
+}
+.hljs-link,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: var(--ob-syntax-link);
+}
+.hljs-punctuation,
+.hljs-params,
+.hljs-property,
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-name,
+.hljs-tag,
+.hljs-operator {
+  color: var(--ob-syntax-punctuation);
+}
+.hljs-addition {
+  color: var(--ob-added);
+  background: var(--ob-diff-added-text);
+}
+.hljs-deletion {
+  color: var(--ob-removed);
+  background: var(--ob-diff-removed-text);
+}
+.hljs-strong {
+  font-weight: var(--ob-weight-semibold);
+}
+.hljs-emphasis {
+  font-style: italic;
+}

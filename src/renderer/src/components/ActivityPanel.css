@@ -1,0 +1,23 @@
+.ob-activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.ob-activity-section { min-width: 0; }
+.ob-activity-section h3 { margin: 0 0 10px; font-size: 13px; }
+.ob-activity-compose { display: grid; gap: 8px; margin-bottom: 24px; }
+.ob-activity-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ob-activity-item { display: flex; align-items: flex-start; gap: 6px; padding: 8px; border: 1px solid var(--ob-border); border-radius: 10px; }
+.ob-activity-item.is-unread { background: color-mix(in srgb, var(--ob-accent) 8%, transparent); border-color: color-mix(in srgb, var(--ob-accent) 35%, var(--ob-border)); }
+.ob-activity-main { display: flex; align-items: flex-start; gap: 9px; min-width: 0; flex: 1; padding: 0; border: 0; background: transparent; color: var(--ob-text-primary); text-align: left; cursor: pointer; }
+.ob-activity-main > span:not(.ob-avatar):not(.ob-activity-dot) { display: grid; gap: 3px; min-width: 0; }
+.ob-activity-main strong { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* `--ob-text-muted` was never defined in tokens.css, so `var()` fell through to
+   the inherited body colour and the timestamp and preview under each event
+   rendered as loud as its title. `--ob-text-tertiary` is the token that actually
+   exists — the same correction already made in RichCard.css. */
+.ob-activity-main small { color: var(--ob-text-tertiary); font-size: 10px; }
+.ob-activity-main em { color: var(--ob-text-tertiary); font-size: 11px; font-style: normal; line-height: 1.35; }
+.ob-activity-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ob-activity-heading span { display: flex; align-items: center; gap: 4px; }
+.ob-activity-dot { width: 7px; height: 7px; margin-top: 4px; border-radius: 50%; background: var(--ob-text-tertiary); flex: none; }
+.ob-activity-dot.is-help, .ob-activity-dot.is-approval { background: var(--ob-warn); }
+.ob-activity-dot.is-completed { background: var(--ob-success, #5ad1a5); }
+.ob-activity-dot.is-failed { background: var(--ob-danger, #fc6b83); }
+@media (max-width: 850px) { .ob-activity-grid { grid-template-columns: 1fr; } }

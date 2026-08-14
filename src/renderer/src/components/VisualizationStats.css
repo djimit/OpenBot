@@ -1,0 +1,56 @@
+/* Stats grids: a reflowing row of headline figures. Tone tokens and the shared frame live in Visualization.css. */
+
+.ob-viz-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--ob-space-2-5);
+  margin: 0;
+}
+
+.ob-viz-stat {
+  min-width: 0;
+  padding: var(--ob-space-2-5) var(--ob-space-3);
+  background: var(--ob-bg-raised);
+  border-radius: var(--ob-radius-xl);
+}
+
+.ob-viz-stat-label {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  overflow: hidden;
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-xs);
+  color: var(--ob-text-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-viz-stat-dot {
+  flex: none;
+  width: var(--ob-space-2);
+  height: var(--ob-space-2);
+  background: var(--ob-viz-tone);
+  border-radius: var(--ob-radius-full);
+}
+
+.ob-viz-stat-value {
+  margin: var(--ob-space-1) 0 0;
+  overflow: hidden;
+  font-size: var(--ob-font-size-xl);
+  line-height: var(--ob-line-height-lg);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-viz-stat-detail {
+  margin: var(--ob-space-0-5) 0 0;
+  overflow: hidden;
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-xs);
+  color: var(--ob-text-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

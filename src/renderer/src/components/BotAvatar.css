@@ -1,0 +1,41 @@
+/* Identity marker: a solid circle in the bot's own colour. One of the few
+   places colour is allowed, alongside state. */
+.ob-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: var(--ob-radius-full);
+  background: var(--ob-bot-color);
+  color: var(--ob-chrome);
+  line-height: 1;
+  user-select: none;
+}
+
+.ob-avatar-ring {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ob-bot-color) 40%, transparent);
+}
+
+.ob-avatar-active {
+  box-shadow:
+    0 0 0 2px var(--ob-bg-editor),
+    0 0 0 4px color-mix(in srgb, var(--ob-bot-color) 60%, transparent);
+}
+
+.ob-avatar-sm {
+  width: var(--ob-space-7);
+  height: var(--ob-space-7);
+  font-size: var(--ob-font-size-sm);
+}
+
+.ob-avatar-md {
+  width: var(--ob-space-8);
+  height: var(--ob-space-8);
+  font-size: var(--ob-font-size-base);
+}
+
+.ob-avatar-lg {
+  width: var(--ob-space-14);
+  height: var(--ob-space-14);
+  font-size: var(--ob-font-size-2xl);
+}

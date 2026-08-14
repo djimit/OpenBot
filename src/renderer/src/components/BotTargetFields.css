@@ -1,0 +1,59 @@
+.ob-target-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-4);
+  margin-top: var(--ob-space-2);
+  padding: var(--ob-space-4);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-3xl);
+}
+
+.ob-target-provision {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-4);
+}
+
+.ob-target-provision strong {
+  font-size: var(--ob-font-size-sm);
+}
+
+.ob-target-provision .ob-hint {
+  margin: var(--ob-space-1) 0 0;
+}
+
+.ob-target-managed {
+  color: var(--ob-green);
+}
+
+.ob-target-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  min-height: 24px;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+}
+
+.ob-target-progress.is-error {
+  color: var(--ob-red);
+}
+
+.ob-target-progress-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--ob-accent);
+  animation: ob-target-pulse 1.2s ease-in-out infinite;
+}
+
+.ob-target-elapsed {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes ob-target-pulse {
+  50% { opacity: 0.35; transform: scale(0.75); }
+}

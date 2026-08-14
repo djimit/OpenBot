@@ -1,0 +1,23 @@
+/*
+ * Card contents are model-authored, so the frame is deliberately prose-shaped: a
+ * quoted block on the ground, matching `.ob-md blockquote`, and never the
+ * filled, bordered panel the app uses for its own surfaces. A card wearing app
+ * chrome is a card a fetched page can use to impersonate OpenBOT.
+ */
+.ob-rich-card { display: grid; gap: 10px; margin: 12px 0; padding: 2px 0 2px 14px; border-left: 2px solid var(--ob-border-strong); background: none; }
+.ob-rich-card header { display: grid; gap: 3px; }
+.ob-rich-card-kind, .ob-rich-card dt { color: var(--ob-text-tertiary); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.ob-rich-card-kind { display: flex; align-items: center; gap: 6px; }
+/* The provenance tag: quiet, always present, never mistaken for a status pill. */
+.ob-rich-card-kind em { padding: 1px 6px; border: 1px solid var(--ob-border); border-radius: 999px; font-style: normal; }
+.ob-rich-card header strong { font-size: 14px; }
+.ob-rich-card dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 10px; margin: 0; }
+.ob-rich-card dd { display: grid; gap: 2px; margin: 0; font-size: 12px; }
+.ob-rich-card p { margin: 0; color: var(--ob-text-secondary); white-space: pre-wrap; line-height: 1.5; }
+.ob-rich-card-people { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; overflow-wrap: anywhere; }
+.ob-rich-card-count { color: var(--ob-text-tertiary); font-size: 10px; }
+/* Class-on-class, so these beat `.ob-rich-card p` rather than tie with it. */
+.ob-rich-card .ob-rich-card-host { font-family: var(--ob-font-mono); font-size: 11px; color: var(--ob-text-primary); overflow-wrap: anywhere; }
+.ob-rich-card .ob-rich-card-origin { color: var(--ob-text-tertiary); font-size: 10px; line-height: 1.4; }
+.ob-rich-card footer { display: flex; justify-content: flex-end; gap: 7px; }
+.ob-rich-card a.ob-btn { text-decoration: none; }

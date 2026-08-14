@@ -1,0 +1,94 @@
+/* An empty pane: the chat picker that fills it. */
+
+.ob-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  min-height: 0;
+  padding: var(--ob-space-3);
+  background: var(--ob-bg-editor);
+  border: 1px dashed var(--ob-border);
+  border-radius: var(--ob-card-radius);
+}
+
+.ob-slot-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-2);
+}
+
+.ob-slot-name {
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ob-text-tertiary);
+}
+
+.ob-slot-search {
+  height: var(--ob-height-sm);
+  font-size: var(--ob-font-size-sm);
+}
+
+.ob-slot-empty {
+  margin: 0;
+  padding: var(--ob-space-2) var(--ob-space-1);
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-0-5);
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.ob-slot-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2-5);
+  width: 100%;
+  padding: var(--ob-space-2) var(--ob-space-2-5);
+  border: 0;
+  border-radius: var(--ob-radius-xl);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--ob-transition-fast);
+}
+.ob-slot-item:hover {
+  background: var(--ob-bg-hover);
+}
+
+.ob-slot-avatars {
+  display: flex;
+  gap: var(--ob-space-0-5);
+  flex-shrink: 0;
+}
+
+.ob-slot-item-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-0-25);
+  min-width: 0;
+}
+
+.ob-slot-item-title {
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-slot-item-meta {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}

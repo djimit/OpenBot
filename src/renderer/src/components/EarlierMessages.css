@@ -1,0 +1,6 @@
+/* Centred, so it reads as a divider at the top of the conversation rather than
+   as a message of its own. Both the transcript and a pane lay their content out
+   as a flex column, so one rule covers both. */
+.ob-earlier {
+  align-self: center;
+}

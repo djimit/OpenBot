@@ -1,0 +1,233 @@
+.ob-mp {
+  position: relative;
+  min-width: 0;
+  --ob-mp-trigger-max: 200px;
+  --ob-menu-width: 232px;
+}
+
+/* ── Trigger ──────────────────────────────────────────────────────── */
+
+.ob-mp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  max-width: var(--ob-mp-trigger-max);
+  /* Required for the label to ellipsis instead of pushing the row wider. */
+  min-width: 0;
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-4);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-secondary);
+  background: var(--ob-bg-input);
+  border: 0;
+  border-radius: var(--ob-control-radius);
+  cursor: pointer;
+}
+
+.ob-mp-trigger:hover:not(:disabled) {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-hover);
+}
+
+.ob-mp-trigger:disabled {
+  cursor: default;
+  color: var(--ob-text-disabled);
+}
+
+.ob-mp-trigger-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-mp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--ob-radius-full);
+  background: currentColor;
+  flex: 0 0 auto;
+}
+
+/* ── Menu surface ─────────────────────────────────────────────────── */
+
+.ob-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--ob-space-2));
+  z-index: 40;
+  width: var(--ob-menu-width);
+  padding: var(--ob-space-1);
+  background: var(--ob-bg-raised-2);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-xl);
+  box-shadow: var(--ob-shadow-popover);
+}
+
+.ob-menu-up {
+  top: auto;
+  bottom: calc(100% + var(--ob-space-2));
+}
+
+.ob-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ob-space-1) var(--ob-space-2);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-menu-section {
+  padding: var(--ob-space-2) var(--ob-space-2) var(--ob-space-1);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-menu-sep {
+  height: 1px;
+  margin: var(--ob-space-1) var(--ob-space-2);
+  background: var(--ob-border-subtle);
+}
+
+/* ── Menu rows ────────────────────────────────────────────────────── */
+
+.ob-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  width: 100%;
+  min-height: 30px;
+  padding: 0 var(--ob-space-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-lg);
+  color: var(--ob-text-primary);
+  font-size: var(--ob-font-size-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ob-menu-item:hover:not(:disabled),
+.ob-menu-item.is-open {
+  background: var(--ob-bg-hover);
+}
+
+.ob-menu-item:disabled {
+  cursor: default;
+  color: var(--ob-text-tertiary);
+}
+
+.ob-menu-item.is-selected .ob-menu-label {
+  font-weight: var(--ob-weight-medium);
+}
+
+.ob-menu-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Monogram standing in for a vendor mark. */
+.ob-menu-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--ob-radius-base);
+  background: var(--ob-bg-input);
+  color: var(--ob-text-tertiary);
+  font-size: 9px;
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: 0.02em;
+}
+
+.ob-menu-count {
+  flex: 0 0 auto;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.ob-menu-tag {
+  flex: 0 0 auto;
+  padding: 1px var(--ob-space-1-5);
+  border-radius: var(--ob-radius-full);
+  background: var(--ob-accent-tertiary);
+  color: var(--ob-accent);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.ob-menu-group {
+  color: var(--ob-text-secondary);
+}
+
+.ob-menu-model.is-indented {
+  padding-left: var(--ob-space-6);
+}
+
+/* ── Flyout ───────────────────────────────────────────────────────── */
+
+/*
+ * Opens beside the agent list rather than replacing it, so the agent stays
+ * visible while its models are browsed. Anchored to the hovered row's offset.
+ */
+.ob-menu-flyout {
+  right: calc(100% + var(--ob-space-1));
+  left: auto;
+  bottom: auto;
+  max-height: 340px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.ob-menu-search {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  margin-bottom: var(--ob-space-1);
+  padding: 0 var(--ob-space-2);
+  min-height: 30px;
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-lg);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-menu-search input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--ob-text-primary);
+  font-size: var(--ob-font-size-sm);
+  font-family: inherit;
+}
+
+.ob-menu-search input::placeholder {
+  color: var(--ob-text-tertiary);
+}
+
+/* ── States ───────────────────────────────────────────────────────── */
+
+.ob-menu-empty,
+.ob-menu-error {
+  margin: 0;
+  padding: var(--ob-space-2);
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-menu-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ob-space-1-5);
+  color: var(--ob-danger);
+}

@@ -1,0 +1,139 @@
+/* Unified with the content beneath: no bottom rule, same ground. */
+.ob-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-4);
+  height: var(--ob-titlebar-height);
+  flex: none;
+  padding: 0 var(--ob-space-4) 0 var(--ob-space-6);
+  -webkit-app-region: drag;
+}
+
+.ob-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-3);
+  min-width: 0;
+}
+.ob-header-title h1 {
+  font-size: var(--ob-font-size-base);
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-header-cwd {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+}
+
+.ob-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  flex: none;
+}
+
+.ob-header-inbox { position: relative; }
+.ob-header-badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--ob-accent);
+  color: white;
+  font-size: 9px;
+  line-height: 15px;
+  text-align: center;
+}
+
+.ob-header-bots {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  margin-right: var(--ob-space-2);
+}
+
+.ob-header-bot {
+  display: flex;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-full);
+  cursor: pointer;
+}
+.ob-header-bot:disabled {
+  cursor: default;
+}
+
+.ob-header-picker {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + var(--ob-space-2));
+  right: 0;
+  min-width: 220px;
+  padding: var(--ob-space-2);
+  background: var(--ob-bg-raised-2);
+  border-radius: var(--ob-card-radius);
+  box-shadow: var(--ob-shadow-popover);
+}
+
+.ob-header-picker-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-3);
+  width: 100%;
+  height: var(--ob-height-lg);
+  padding: 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-sm);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-xl);
+  cursor: pointer;
+  text-align: left;
+}
+.ob-header-picker-item:hover {
+  background: var(--ob-bg-active);
+}
+
+.ob-header-picker-empty {
+  padding: var(--ob-space-3);
+}
+
+/* The working folder is a control, not a label: a chat is useless if you cannot
+   point it at the right directory, and it was previously unchangeable. */
+.ob-header-cwd {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  max-width: 300px;
+  min-width: 0;
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-2-5);
+  background: var(--ob-bg-input);
+  border: 0;
+  border-radius: var(--ob-control-radius);
+  color: var(--ob-text-secondary);
+  font-size: var(--ob-font-size-xs);
+  cursor: pointer;
+}
+.ob-header-cwd:hover {
+  background: var(--ob-bg-hover);
+  color: var(--ob-text-primary);
+}
+.ob-header-cwd-path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

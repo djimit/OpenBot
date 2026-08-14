@@ -1,0 +1,24 @@
+.ob-bot-skills-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-2);
+}
+
+.ob-bot-skill {
+  align-items: flex-start;
+}
+
+.ob-bot-skill-name {
+  font-weight: var(--ob-weight-medium);
+  margin-right: var(--ob-space-1-5);
+}
+
+/* Descriptions run long — keep them to two lines so the list stays scannable. */
+.ob-bot-skill-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 2px;
+}

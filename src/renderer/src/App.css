@@ -1,0 +1,24 @@
+/* Regions are separated by surface elevation and space — never by rules. */
+.ob-app {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ob-bg-chrome);
+  /* Positioning context for the rail when it floats on a narrow window. */
+  position: relative;
+}
+
+.ob-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--ob-bg-editor);
+}
+
+@media (max-width: 900px) {
+  .ob-sidebar {
+    display: none;
+  }
+}

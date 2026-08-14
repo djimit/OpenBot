@@ -1,0 +1,163 @@
+/*
+ * Inline visualisations.
+ *
+ * Every colour resolves through one indirection: an element carries
+ * `data-tone`, the block below turns that into `--ob-viz-tone`, and the rest of
+ * the file only ever reads that variable. Adding a tone means one rule here and
+ * nothing anywhere else, and no component file names a colour.
+ *
+ * The tokens are theme-derived (`--ob-accent`, `--ob-success`, …), so light and
+ * dark both work with no per-theme rules in this file.
+ */
+
+.ob-viz {
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden; /* keeps the card's corners over the scrolling flow canvas */
+  background: var(--ob-bg-card);
+  border-radius: var(--ob-card-radius);
+}
+
+/*
+ * Charts render inside `.ob-md`, whose element rules (`.ob-md p`, `.ob-md ol`,
+ * `li + li`) out-specify a single class. These selectors are deliberately
+ * doubled so the chart's own layout wins regardless of stylesheet order.
+ */
+.ob-viz .ob-viz-bars,
+.ob-viz .ob-viz-timeline,
+.ob-viz .ob-viz-stats {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ob-viz .ob-viz-bar + .ob-viz-bar,
+.ob-viz .ob-viz-event + .ob-viz-event {
+  margin-top: 0;
+}
+.ob-viz .ob-viz-empty,
+.ob-viz .ob-viz-event-detail {
+  margin: 0;
+}
+.ob-viz .ob-viz-event-detail {
+  margin-top: var(--ob-space-0-5);
+}
+
+/* ── Tone vocabulary ──────────────────────────────────────────────── */
+
+.ob-viz [data-tone] {
+  --ob-viz-tone: var(--ob-text-tertiary);
+}
+.ob-viz [data-tone='accent'] {
+  --ob-viz-tone: var(--ob-accent);
+}
+.ob-viz [data-tone='positive'] {
+  --ob-viz-tone: var(--ob-success);
+}
+.ob-viz [data-tone='warning'] {
+  --ob-viz-tone: var(--ob-warn);
+}
+.ob-viz [data-tone='danger'] {
+  --ob-viz-tone: var(--ob-danger);
+}
+
+/* ── Frame ────────────────────────────────────────────────────────── */
+
+.ob-viz-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ob-space-2-5);
+  padding: var(--ob-space-3-5) var(--ob-space-5) 0;
+}
+
+.ob-viz-kind {
+  flex: none;
+  padding: var(--ob-space-0-5) var(--ob-space-2);
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-xs);
+  color: var(--ob-text-tertiary);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-full);
+}
+
+/*
+ * Model-authored strings are clamped by length, not by width, and a clamp of 120
+ * characters with no spaces in it is still wider than the card. Everything that
+ * is allowed to wrap has to be allowed to wrap mid-word.
+ */
+.ob-viz-titles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-0-5);
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.ob-viz-title {
+  font-size: var(--ob-font-size-base);
+  line-height: var(--ob-line-height-sm);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-primary);
+}
+
+.ob-viz-subtitle {
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-text-secondary);
+}
+
+.ob-viz-source {
+  flex: none;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+}
+
+.ob-viz-body {
+  padding: var(--ob-space-4) var(--ob-space-5);
+}
+
+.ob-viz-empty {
+  margin: 0;
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-viz-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ob-space-1-5) var(--ob-space-4);
+  padding: var(--ob-space-3) var(--ob-space-5) var(--ob-space-4);
+  border-top: 1px solid var(--ob-border-subtle);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-text-tertiary);
+  overflow-wrap: anywhere;
+}
+
+.ob-viz-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+}
+
+.ob-viz-swatch {
+  width: var(--ob-space-3);
+  height: var(--ob-space-3);
+  background: var(--ob-viz-tone);
+  border-radius: var(--ob-radius-sm);
+}
+
+.ob-viz-caption {
+  flex: 1 1 200px;
+}
+
+/* ── Shared: horizontal scroller for content wider than the transcript ── */
+
+.ob-viz-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: var(--ob-space-1);
+}

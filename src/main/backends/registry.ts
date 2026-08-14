@@ -1,0 +1,143 @@
+/**
+ * The backend registry: every adapter, one detection pass, one lookup.
+ *
+ * `detectAll` never throws and never blocks startup — each backend gets a hard
+ * time budget, results are cached to disk, and `cachedBackendInfos` renders the
+ * last-known state instantly while a fresh pass runs.
+ */
+
+import { anthropicBackend } from './anthropic'
+import { configFor } from './backendDefaults'
+import { agentCliBackends } from './cli'
+import { raceTimeout } from './httpClient'
+import { errorMessage } from './httpErrors'
+import { resetHydratedEnv } from './loginShellEnv'
+import { openaiBackend } from './openai'
+import { openrouterBackend } from './openrouter'
+import { readStatusCache, rememberStatuses } from './statusCache'
+import type { Backend, BackendConfig, ModelInfo } from './types'
+import { clearWhichCache } from './which'
+import { xaiBackend } from './xai'
+import type { BackendInfo } from '../../shared/types'
+
+/** Hard ceiling per backend, covering detection plus its model listing. */
+const BACKEND_BUDGET_MS = 8000
+
+/**
+ * Agent CLIs first: they are the primary path, run locally, and bring their own
+ * auth. The direct cloud adapters are the fallback for users with a bare API
+ * key and no CLI installed.
+ */
+export const BACKENDS: Backend[] = [
+  ...agentCliBackends,
+  openaiBackend,
+  anthropicBackend,
+  xaiBackend,
+  openrouterBackend
+]
+
+const BY_ID = new Map(BACKENDS.map((b) => [b.id, b]))
+
+export function listBackends(): Backend[] {
+  return BACKENDS
+}
+
+export function getBackend(id: string): Backend | undefined {
+  return BY_ID.get(id)
+}
+
+function toolModeFor(backend: Backend, models: ModelInfo[]): 'native' | 'prompted' {
+  if (backend.kind !== 'local-server') return 'native'
+  if (!models.length) return 'prompted'
+  return models.some((m) => m.supportsTools) ? 'native' : 'prompted'
+}
+
+function shell(backend: Backend): BackendInfo {
+  return {
+    id: backend.id,
+    label: backend.label,
+    kind: backend.kind,
+    status: 'error',
+    models: [],
+    local: backend.local,
+    ...(backend.supportsVmOrchestration ? { supportsVmOrchestration: true } : {}),
+    toolMode: backend.kind === 'local-server' ? 'prompted' : 'native'
+  }
+}
+
+async function detectOne(backend: Backend, cfg: BackendConfig): Promise<BackendInfo> {
+  const base = shell(backend)
+  if (cfg.enabled === false) {
+    return { ...base, status: 'not-installed', statusDetail: 'Disabled in Settings.' }
+  }
+
+  try {
+    const result = await backend.detect(cfg)
+    const models =
+      result.status === 'available' ? await backend.listModels(cfg).catch(() => []) : []
+    return {
+      ...base,
+      status: result.status,
+      ...(result.detail ? { statusDetail: result.detail } : {}),
+      models,
+      toolMode: toolModeFor(backend, models)
+    }
+  } catch (err) {
+    // Detection is best-effort by contract: report, never throw.
+    return { ...base, status: 'error', statusDetail: errorMessage(err) }
+  }
+}
+
+/** Probe every backend in parallel. Resolves in bounded time, always. */
+export async function detectAll(
+  configs?: Record<string, BackendConfig>
+): Promise<BackendInfo[]> {
+  const infos = await Promise.all(
+    BACKENDS.map((backend) =>
+      raceTimeout(detectOne(backend, configFor(backend.id, configs)), BACKEND_BUDGET_MS, {
+        ...shell(backend),
+        status: 'error' as const,
+        statusDetail: 'Detection timed out.'
+      })
+    )
+  )
+  await rememberStatuses(infos)
+  return infos
+}
+
+function provisionalStatus(backend: Backend): BackendInfo {
+  const base = shell(backend)
+  const status =
+    backend.kind === 'cloud-api'
+      ? ('needs-key' as const)
+      : backend.kind === 'agent-cli'
+        ? ('not-installed' as const)
+        : ('not-running' as const)
+  return { ...base, status, statusDetail: 'Not checked yet.' }
+}
+
+/**
+ * Last-known state from disk, for an instant first paint.
+ * Call `detectAll` right after and replace the list when it resolves.
+ */
+export async function cachedBackendInfos(): Promise<BackendInfo[]> {
+  const cache = await readStatusCache()
+  return BACKENDS.map((backend) => {
+    const stored = cache[backend.id]
+    if (!stored) return provisionalStatus(backend)
+    return {
+      ...shell(backend),
+      status: stored.status,
+      ...(stored.statusDetail ? { statusDetail: stored.statusDetail } : {}),
+      models: stored.models ?? [],
+      toolMode: stored.toolMode ?? 'native',
+      ...(stored.supportsVmOrchestration ? { supportsVmOrchestration: true } : {})
+    }
+  })
+}
+
+/** Drop memoised PATH/env lookups so a manual refresh really re-probes. */
+export function invalidateDetection(): void {
+  clearWhichCache()
+  resetHydratedEnv()
+}

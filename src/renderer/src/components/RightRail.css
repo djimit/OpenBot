@@ -1,0 +1,72 @@
+.ob-rail {
+  display: flex;
+  flex-direction: column;
+  width: var(--ob-rail-width);
+  flex: none;
+  min-height: 0;
+  background: var(--ob-bg-editor);
+}
+
+.ob-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--ob-titlebar-height);
+  flex: none;
+  padding: 0 var(--ob-space-4) 0 var(--ob-space-5);
+  -webkit-app-region: drag;
+}
+
+.ob-rail-head-title {
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ob-rail-head .ob-icon-btn {
+  -webkit-app-region: no-drag;
+}
+
+.ob-rail-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-3);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--ob-space-1) var(--ob-space-4) var(--ob-space-6);
+}
+
+/* Section heading shared by the panels the rail hosts. */
+.ob-rail-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/*
+ * Narrow windows get a slimmer rail rather than none at all. It previously
+ * collapsed to `display: none` below 1180px, which made the toggle look broken:
+ * the button flipped state and nothing appeared. Staying in flow — rather than
+ * floating over the content — matters because an overlay covered the composer's
+ * Send button.
+ */
+@media (max-width: 1180px) {
+  .ob-rail {
+    width: 264px;
+  }
+}
+
+@media (max-width: 960px) {
+  .ob-rail {
+    width: 232px;
+  }
+}

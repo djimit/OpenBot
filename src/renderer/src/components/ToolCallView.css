@@ -1,0 +1,151 @@
+/* Tool calls are cards on the black ground — no outline, elevation only. */
+.ob-tool {
+  border-radius: var(--ob-card-radius);
+  background: var(--ob-bg-card);
+  overflow: hidden;
+}
+
+.ob-tool-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2-5);
+  width: 100%;
+  min-height: var(--ob-height-lg);
+  padding: var(--ob-space-2) var(--ob-space-4);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.ob-tool-row:hover {
+  background: var(--ob-bg-active);
+}
+
+.ob-tool-caret {
+  display: flex;
+  color: var(--ob-text-tertiary);
+}
+
+.ob-tool-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ob-space-5);
+  height: var(--ob-space-5);
+  border-radius: var(--ob-radius-full);
+  flex: none;
+}
+.ob-tool-status-running {
+  color: var(--ob-accent);
+  background: var(--ob-accent-tertiary);
+}
+.ob-tool-status-ok {
+  color: var(--ob-success);
+  background: var(--ob-success-tertiary);
+}
+.ob-tool-status-failed {
+  color: var(--ob-danger);
+  background: var(--ob-danger-tertiary);
+}
+
+.ob-tool-name {
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-primary);
+  flex: none;
+}
+
+.ob-tool-summary {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-tool-duration {
+  flex: none;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+  font-variant-numeric: tabular-nums;
+}
+
+.ob-tool-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-5);
+  padding: var(--ob-space-2) var(--ob-card-padding) var(--ob-card-padding);
+}
+
+.ob-tool-label {
+  margin: 0 0 var(--ob-space-2);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  color: var(--ob-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ob-tool-args {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  margin: 0;
+}
+.ob-tool-args > div {
+  display: grid;
+  grid-template-columns: minmax(0, var(--ob-space-20)) 1fr;
+  gap: var(--ob-space-3);
+}
+.ob-tool-args dt {
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ob-tool-args dd {
+  margin: 0;
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-text-secondary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: var(--ob-space-20);
+  overflow-y: auto;
+}
+
+.ob-tool-output {
+  margin: 0;
+  max-height: 280px;
+  overflow: auto;
+  padding: var(--ob-space-4);
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-syntax-fg);
+  background: var(--ob-syntax-bg);
+  border-radius: var(--ob-radius-xl);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ob-tool-shot {
+  display: block;
+  width: 100%;
+  border-radius: var(--ob-radius-xl);
+}
+
+.ob-tool-pending,
+.ob-tool-failed {
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-tertiary);
+}
+.ob-tool-failed {
+  color: var(--ob-danger);
+}

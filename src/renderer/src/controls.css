@@ -1,0 +1,203 @@
+/* Shared control primitives.
+   The reference product's signature control is a full pill: dark fill, hairline
+   outline, white label, roomy sides. Everything here follows that shape. */
+
+.ob-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ob-space-2);
+  height: var(--ob-height-base);
+  padding: 0 var(--ob-space-5);
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-control-radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--ob-transition-fast), border-color var(--ob-transition-fast);
+}
+.ob-btn:hover:not(:disabled) {
+  background: var(--ob-bg-active);
+  border-color: var(--ob-border-strong);
+}
+.ob-btn:disabled {
+  color: var(--ob-text-disabled);
+  cursor: not-allowed;
+}
+.ob-btn-sm {
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-4);
+  font-size: var(--ob-font-size-xs);
+}
+.ob-btn-lg {
+  height: var(--ob-height-lg);
+  padding: 0 var(--ob-space-6);
+  font-size: var(--ob-font-size-base);
+}
+/*
+ * Primary actions are monochrome — the foreground colour inverted against the
+ * ground. Colour is reserved for STATE (working, error, diff), so an amber
+ * Send button reads as a warning rather than the main action. Inverts
+ * correctly in light theme because both tokens flip together.
+ */
+.ob-btn-primary {
+  color: var(--ob-chrome);
+  background: var(--ob-base);
+  border-color: transparent;
+}
+.ob-btn-primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--ob-base) 86%, transparent);
+  border-color: transparent;
+}
+.ob-btn-primary:disabled {
+  color: var(--ob-text-disabled);
+  background: color-mix(in srgb, var(--ob-base) 14%, transparent);
+}
+.ob-btn-danger {
+  color: var(--ob-danger);
+  border-color: var(--ob-danger-secondary);
+  background: transparent;
+}
+.ob-btn-danger:hover:not(:disabled) {
+  background: var(--ob-danger-quaternary);
+  border-color: var(--ob-danger-secondary);
+}
+.ob-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+.ob-btn-ghost:hover:not(:disabled) {
+  background: var(--ob-bg-active);
+  border-color: transparent;
+}
+
+.ob-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--ob-height-sm);
+  height: var(--ob-height-sm);
+  color: var(--ob-text-tertiary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-full);
+  cursor: pointer;
+  transition: background var(--ob-transition-fast), color var(--ob-transition-fast);
+}
+.ob-icon-btn:hover:not(:disabled) {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-active);
+}
+.ob-icon-btn:disabled {
+  color: var(--ob-text-disabled);
+  cursor: not-allowed;
+}
+.ob-icon-btn[aria-pressed='true'] {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-active);
+}
+
+.ob-input,
+.ob-select,
+.ob-textarea {
+  width: 100%;
+  padding: 0 var(--ob-space-4);
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-control-radius);
+}
+.ob-input,
+.ob-select {
+  height: var(--ob-height-base);
+}
+.ob-textarea {
+  padding: var(--ob-space-3) var(--ob-space-4);
+  line-height: var(--ob-line-height-base);
+  border-radius: var(--ob-radius-3xl);
+  resize: vertical;
+}
+.ob-input::placeholder,
+.ob-textarea::placeholder {
+  color: var(--ob-text-disabled);
+}
+.ob-input:focus,
+.ob-select:focus,
+.ob-textarea:focus {
+  outline: none;
+  border-color: var(--ob-border-strong);
+  background: var(--ob-bg-active);
+}
+.ob-select {
+  appearance: none;
+  padding-right: var(--ob-space-6);
+  cursor: pointer;
+}
+
+.ob-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+}
+.ob-field > label,
+.ob-label {
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-secondary);
+}
+.ob-hint {
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-base);
+  color: var(--ob-text-tertiary);
+}
+.ob-check {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  font-size: var(--ob-font-size-sm);
+  cursor: pointer;
+}
+.ob-check input {
+  width: var(--ob-space-4);
+  height: var(--ob-space-4);
+  accent-color: var(--ob-accent);
+  margin: 0;
+}
+
+/* Segmented switch — modes, replay modes, computer targets. */
+.ob-mode {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: var(--ob-space-0-5);
+  padding: var(--ob-space-0-75);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-control-radius);
+}
+.ob-mode-btn {
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-4);
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-text-tertiary);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-control-radius);
+  cursor: pointer;
+  transition: background var(--ob-transition-fast), color var(--ob-transition-fast);
+}
+.ob-mode-btn:hover:not(:disabled) {
+  color: var(--ob-text-primary);
+}
+.ob-mode-btn.is-active {
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-focused);
+}
+.ob-mode-btn:disabled {
+  color: var(--ob-text-disabled);
+  cursor: not-allowed;
+}

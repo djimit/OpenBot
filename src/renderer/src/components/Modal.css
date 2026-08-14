@@ -1,0 +1,72 @@
+.ob-modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--ob-space-16) var(--ob-space-8) var(--ob-space-12);
+  background: var(--ob-bg-overlay);
+  backdrop-filter: blur(8px);
+}
+
+.ob-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  background: var(--ob-bg-raised);
+  border-radius: var(--ob-card-radius);
+  box-shadow: var(--ob-shadow-modal);
+}
+
+.ob-modal-sm {
+  max-width: 460px;
+}
+.ob-modal-md {
+  max-width: 680px;
+}
+.ob-modal-lg {
+  max-width: 940px;
+}
+.ob-modal-xl {
+  max-width: 1240px;
+  height: 100%;
+}
+
+.ob-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ob-space-4);
+  padding: var(--ob-card-padding) var(--ob-card-padding) var(--ob-space-4);
+}
+
+.ob-modal-heading h2 {
+  margin: 0;
+  font-size: var(--ob-font-size-xl);
+  line-height: var(--ob-line-height-lg);
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: -0.02em;
+}
+
+.ob-modal-heading p {
+  margin: var(--ob-space-1) 0 0;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-base);
+}
+
+.ob-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+}
+
+.ob-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 var(--ob-card-padding) var(--ob-card-padding);
+}

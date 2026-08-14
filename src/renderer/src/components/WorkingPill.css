@@ -1,0 +1,43 @@
+.ob-working {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  color: var(--ob-accent);
+  background: var(--ob-accent-tertiary);
+  border-radius: var(--ob-radius-full);
+  font-weight: var(--ob-weight-medium);
+  white-space: nowrap;
+}
+
+.ob-working-sm {
+  height: var(--ob-height-xs);
+  padding: 0 var(--ob-space-3);
+  font-size: var(--ob-font-size-xs);
+}
+
+.ob-working-md {
+  height: var(--ob-height-sm);
+  padding: 0 var(--ob-space-4);
+  font-size: var(--ob-font-size-sm);
+}
+
+.ob-working-dot {
+  width: var(--ob-space-2);
+  height: var(--ob-space-2);
+  flex: none;
+  border-radius: var(--ob-radius-full);
+  background: var(--ob-accent);
+  animation: ob-working-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ob-working-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

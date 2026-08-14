@@ -1,0 +1,112 @@
+{
+  "name": "openbot",
+  "version": "0.1.0",
+  "description": "Open-source, local-first multi-bot desktop agent. No account, no telemetry.",
+  "keywords": [
+    "electron",
+    "desktop",
+    "agent",
+    "ai",
+    "local-first",
+    "coding-agent",
+    "cli",
+    "kanban",
+    "skills"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashhart/OpenBot.git"
+  },
+  "homepage": "https://github.com/ashhart/OpenBot#readme",
+  "bugs": {
+    "url": "https://github.com/ashhart/OpenBot/issues"
+  },
+  "author": "OpenBOT contributors",
+  "private": true,
+  "main": "out/main/index.js",
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "vm-daemon": "node out/main/vmDaemon.js",
+    "dist": "node -e \"require('electron')\" && electron-vite build && electron-builder --mac",
+    "pack": "node -e \"require('electron')\" && electron-vite build && electron-builder --mac --dir",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "build": {
+    "appId": "com.openbot.app",
+    "productName": "OpenBOT",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      "LICENSE",
+      "THIRD-PARTY-NOTICES.md",
+      {
+        "from": "vm-image",
+        "to": "vm-image"
+      },
+      {
+        "from": "out/main",
+        "to": "guest-runtime"
+      },
+      {
+        "from": "node_modules/electron/dist/LICENSES.chromium.html",
+        "to": "LICENSES.chromium.html"
+      }
+    ],
+    "mac": {
+      "identity": null,
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "darkModeSupport": true,
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSCameraUsageDescription": "OpenBOT needs camera access only if you attach camera input to a bot.",
+        "NSMicrophoneUsageDescription": "OpenBOT needs microphone access only if you use voice input.",
+        "NSAppleEventsUsageDescription": "OpenBOT uses AppleScript to let bots control apps on your behalf during computer-use actions."
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "esbuild": "^0.25.12",
+    "highlight.js": "^11.12.0",
+    "marked": "^18.0.9",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6"
+  },
+  "allowScripts": {
+    "electron@43.4.0": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  }
+}

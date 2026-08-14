@@ -1,0 +1,16 @@
+node_modules/
+out/
+dist/
+release/
+tests/
+coverage/
+.DS_Store
+*.log
+
+# Local overrides and toolchain scratch. `build/` is NOT ignored: it holds the
+# macOS entitlements the signed build needs.
+.env
+.env.*
+*.tsbuildinfo
+.vite/
+.eslintcache

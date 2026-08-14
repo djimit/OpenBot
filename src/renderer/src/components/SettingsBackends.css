@@ -1,0 +1,61 @@
+.ob-settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2-5);
+}
+
+.ob-settings-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-2);
+}
+
+.ob-backends {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ob-backend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-1-5);
+  padding: var(--ob-space-2-5);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-lg);
+}
+
+.ob-backend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-2);
+  flex-wrap: wrap;
+}
+
+.ob-backend-name {
+  font-size: var(--ob-font-size-base);
+  font-weight: var(--ob-weight-medium);
+}
+
+.ob-backend-tags {
+  display: flex;
+  gap: var(--ob-space-1);
+}
+
+.ob-backend-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--ob-space-2);
+}
+
+.ob-backend-key {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1);
+}

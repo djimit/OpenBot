@@ -1,0 +1,45 @@
+.ob-memory {
+  padding-top: var(--ob-space-5);
+}
+
+.ob-memory-add {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  margin: var(--ob-space-3) 0;
+}
+
+.ob-memory-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ob-memory-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-2);
+  padding: var(--ob-space-3) var(--ob-space-4);
+  background: var(--ob-bg-input);
+  border-radius: var(--ob-radius-3xl);
+}
+
+.ob-memory-text {
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-base);
+  overflow-wrap: anywhere;
+}
+
+.ob-memory-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+}
+.ob-memory-meta > span:nth-child(2) {
+  flex: 1;
+}

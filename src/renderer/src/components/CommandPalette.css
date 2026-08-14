@@ -1,0 +1,100 @@
+.ob-palette-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--ob-space-20) var(--ob-space-8);
+  background: var(--ob-bg-overlay);
+  backdrop-filter: blur(8px);
+}
+
+.ob-palette {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 580px;
+  max-height: 62vh;
+  overflow: hidden;
+  background: var(--ob-bg-raised-2);
+  border-radius: var(--ob-card-radius);
+  box-shadow: var(--ob-shadow-modal);
+}
+
+.ob-palette-search {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-3);
+  padding: 0 var(--ob-space-5);
+  height: var(--ob-space-16);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-palette-input {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ob-font-size-lg);
+  color: var(--ob-text-primary);
+  background: transparent;
+  border: 0;
+}
+.ob-palette-input:focus {
+  outline: none;
+}
+.ob-palette-input::placeholder {
+  color: var(--ob-text-disabled);
+}
+
+.ob-palette-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 0;
+  padding: var(--ob-space-2) var(--ob-space-3) var(--ob-space-3);
+  list-style: none;
+}
+
+.ob-palette-item {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-3);
+  width: 100%;
+  height: var(--ob-height-lg);
+  padding: 0 var(--ob-space-3);
+  background: transparent;
+  border: 0;
+  border-radius: var(--ob-radius-xl);
+  cursor: pointer;
+  text-align: left;
+}
+.ob-palette-item.is-active {
+  background: var(--ob-bg-focused);
+}
+
+.ob-palette-icon {
+  display: flex;
+  width: var(--ob-space-4);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-palette-label {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ob-font-size-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-palette-hint {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+}
+
+.ob-palette-empty {
+  padding: var(--ob-space-8);
+  font-size: var(--ob-font-size-base);
+  color: var(--ob-text-tertiary);
+  text-align: center;
+}

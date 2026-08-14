@@ -1,0 +1,43 @@
+import type { ReactNode } from 'react'
+import type { Attachment } from '../../../shared/types'
+import { basename } from '../lib/format'
+import { pickFiles } from '../state'
+import { IconClose } from './Icons'
+
+/** Asks for files and turns the chosen paths into attachments. */
+export async function chooseAttachments(): Promise<Attachment[]> {
+  const paths = await pickFiles()
+  return paths.map((path, i) => ({
+    id: `att-${Date.now()}-${i}`,
+    kind: 'file' as const,
+    name: basename(path),
+    path
+  }))
+}
+
+interface AttachmentsProps {
+  attachments: Attachment[]
+  onRemove: (id: string) => void
+}
+
+/** What is riding along with the next message. */
+export function ComposerAttachments({ attachments, onRemove }: AttachmentsProps): ReactNode {
+  if (attachments.length === 0) return null
+  return (
+    <ul className="ob-composer-attachments">
+      {attachments.map((a) => (
+        <li key={a.id} title={a.path ?? a.name}>
+          <span className="ob-composer-attach-name">{a.name}</span>
+          <button
+            type="button"
+            className="ob-icon-btn"
+            aria-label={`Remove ${a.name}`}
+            onClick={() => onRemove(a.id)}
+          >
+            <IconClose size={11} />
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}

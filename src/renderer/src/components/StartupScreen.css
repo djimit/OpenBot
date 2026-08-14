@@ -1,0 +1,55 @@
+/* Sign-in-style composition: a small block of content, perfectly centred in a
+   large field of black. */
+.ob-startup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: var(--ob-bg-chrome);
+}
+
+.ob-startup-drag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--ob-titlebar-height);
+  -webkit-app-region: drag;
+}
+
+.ob-startup-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ob-space-6);
+  width: 100%;
+  max-width: 440px;
+  padding: var(--ob-space-8);
+  text-align: center;
+}
+
+.ob-startup-brand {
+  font-size: var(--ob-font-size-hero);
+  line-height: 1.1;
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: -0.03em;
+}
+
+.ob-startup-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  font-size: var(--ob-font-size-lg);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-startup-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ob-space-2);
+  font-size: var(--ob-font-size-base);
+  line-height: var(--ob-line-height-base);
+  color: var(--ob-danger);
+  text-align: left;
+}

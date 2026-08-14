@@ -1,0 +1,27 @@
+/* Contained render failure: visible enough to report, quiet enough not to
+   dominate a transcript when it happens to a single message. */
+.ob-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ob-space-2);
+  padding: var(--ob-card-padding);
+  background: var(--ob-danger-quaternary);
+  border: 1px solid var(--ob-danger-tertiary);
+  border-radius: var(--ob-card-radius);
+}
+
+.ob-boundary-title {
+  margin: 0;
+  color: var(--ob-danger);
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-medium);
+}
+
+.ob-boundary-detail {
+  margin: 0;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+  font-family: var(--ob-font-mono);
+  overflow-wrap: anywhere;
+}

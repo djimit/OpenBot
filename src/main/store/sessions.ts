@@ -1,0 +1,274 @@
+/**
+ * Sessions — one chat thread (or bot-to-bot exchange) per `sessions/<id>.json`.
+ *
+ * The cache is authoritative; every mutation bumps `updatedAt` and schedules a
+ * debounced write. The agent loop mutates sessions through the helpers at the
+ * bottom of this file, which keeps persistence and event broadcasting apart.
+ */
+
+import { randomUUID } from 'node:crypto'
+import type { AgentMode, Message, Session, SessionSummary, TodoItem } from '../../shared/types'
+import { getSettings } from '../settings'
+import { compactSession } from './compaction'
+import { JsonCollection } from './collection'
+import { sessionsDir } from './paths'
+import { defaultBotId } from './bots'
+import { defaultCwd, normaliseSession, normaliseTodos, stringList } from './sessionSchema'
+
+const collection = new JsonCollection<Session>(sessionsDir, normaliseSession)
+
+export async function loadSessions(): Promise<void> {
+  await collection.load()
+}
+
+/* ── queries ─────────────────────────────────────────────────────── */
+
+/** Summaries for the sidebar, most recently updated first. */
+export function listSessions(): SessionSummary[] {
+  return collection
+    .all()
+    .map((session) => {
+      const summary: SessionSummary = {
+        id: session.id,
+        title: session.title,
+        botIds: [...session.botIds],
+        updatedAt: session.updatedAt,
+        messageCount: session.messages.length
+      }
+      if (session.archived) summary.archived = true
+      if (session.projectId) summary.projectId = session.projectId
+      return summary
+    })
+    .sort((a, b) => b.updatedAt - a.updatedAt)
+}
+
+export function getSession(id: string): Session | null {
+  return collection.get(id)
+}
+
+/** Every session in full — for the agent loop and exchange bookkeeping. */
+export function allSessions(): Session[] {
+  return collection.all()
+}
+
+/* ── mutations ───────────────────────────────────────────────────── */
+
+/**
+ * Persist a session as-is, bumping `updatedAt`.
+ *
+ * Every write goes through compaction: the file is rewritten whole each time,
+ * so an unbounded payload is a cost paid on every message rather than once.
+ */
+export function saveSession(session: Session): Session {
+  return collection.put(compactSession({ ...session, updatedAt: Date.now() }))
+}
+
+function mutate(id: string, fn: (session: Session) => Session): Session | null {
+  const existing = collection.get(id)
+  if (!existing) return null
+  return collection.put(compactSession({ ...fn(existing), id: existing.id, updatedAt: Date.now() }))
+}
+
+export function createSession(botIds?: string[]): Session {
+  const requested = stringList(botIds)
+  const fallback = defaultBotId()
+  const ids = requested.length > 0 ? requested : fallback ? [fallback] : []
+  const now = Date.now()
+  return collection.put({
+    id: randomUUID(),
+    title: 'New Chat',
+    cwd: defaultCwd(),
+    mode: getSettings().defaultMode,
+    botIds: ids,
+    activeBotId: ids[0] ?? '',
+    messages: [],
+    todos: [],
+    createdAt: now,
+    updatedAt: now
+  })
+}
+
+export function renameSession(id: string, title: string): Session | null {
+  const clean = title.trim().slice(0, 200)
+  return mutate(id, (session) => ({ ...session, title: clean || session.title }))
+}
+
+export function archiveSession(id: string): Session | null {
+  return mutate(id, (session) => ({ ...session, archived: true }))
+}
+
+export function unarchiveSession(id: string): Session | null {
+  return mutate(id, (session) => {
+    const next = { ...session }
+    delete next.archived
+    return next
+  })
+}
+
+export function removeSession(id: string): boolean {
+  return collection.delete(id)
+}
+
+export function setSessionMode(id: string, mode: AgentMode): Session | null {
+  return mutate(id, (session) => ({ ...session, mode }))
+}
+
+export function setSessionCwd(id: string, cwd: string): Session | null {
+  return mutate(id, (session) => ({ ...session, cwd }))
+}
+
+export function addBotToSession(id: string, botId: string): Session | null {
+  return mutate(id, (session) => {
+    if (session.botIds.includes(botId)) return session
+    return {
+      ...session,
+      botIds: [...session.botIds, botId],
+      activeBotId: session.activeBotId || botId
+    }
+  })
+}
+
+export function removeBotFromSession(id: string, botId: string): Session | null {
+  return mutate(id, (session) => {
+    const botIds = session.botIds.filter((entry) => entry !== botId)
+    return {
+      ...session,
+      botIds,
+      activeBotId: session.activeBotId === botId ? (botIds[0] ?? '') : session.activeBotId
+    }
+  })
+}
+
+/** Remove a deleted bot from every chat that still references it. */
+export function removeBotFromAllSessions(botId: string): Session[] {
+  if (!botId) return []
+  const touched: Session[] = []
+  for (const session of collection.all()) {
+    if (!session.botIds.includes(botId) && session.activeBotId !== botId) continue
+    const next = removeBotFromSession(session.id, botId)
+    if (next) touched.push(next)
+  }
+  return touched
+}
+
+/**
+ * Give the floor to a bot that is already part of this chat.
+ *
+ * The roster check is the last line of defence, not the first — `agent/handoff.ts`
+ * refuses an outside target with a message the model can read. This one is silent
+ * (a null, as for a session that is gone) and exists because a bare `mutate` here
+ * made every caller that forgot to validate into a way of pointing a chat at any
+ * bot in the app; the MCP gateway was exactly that caller.
+ */
+export function setActiveBot(id: string, botId: string): Session | null {
+  const session = collection.get(id)
+  if (!session || !session.botIds.includes(botId)) return null
+  return mutate(id, (existing) => ({ ...existing, activeBotId: botId }))
+}
+
+/** File a chat into a project, or pass null to make it a loose chat again. */
+export function setSessionProject(id: string, projectId: string | null): Session | null {
+  return mutate(id, (session) => {
+    const next = { ...session }
+    if (projectId) next.projectId = projectId
+    else delete next.projectId
+    return next
+  })
+}
+
+/**
+ * Unfile every chat belonging to `projectId`, persisting each one.
+ *
+ * Called when a project is deleted: without this the chats keep pointing at an
+ * id that is gone, which shows them in neither the project nor the loose-chat
+ * list. Returns the sessions that changed, so the caller can announce them.
+ */
+export function unfileSessionsFrom(projectId: string): Session[] {
+  if (!projectId) return []
+  const touched: Session[] = []
+  for (const session of collection.all()) {
+    if (session.projectId !== projectId) continue
+    const next = setSessionProject(session.id, null)
+    if (next) touched.push(next)
+  }
+  return touched
+}
+
+/**
+ * Unfile every chat whose project no longer exists.
+ *
+ * A chat filed into a project that was deleted before the cascade existed shows
+ * up in neither the project nor the loose-chat list — it is invisible but not
+ * gone. Run once at startup, with both collections loaded, so those chats come
+ * back. Returns the sessions that changed.
+ */
+export function unfileOrphanedSessions(projectExists: (id: string) => boolean): Session[] {
+  const touched: Session[] = []
+  for (const session of collection.all()) {
+    const projectId = session.projectId
+    if (!projectId || projectExists(projectId)) continue
+    const next = setSessionProject(session.id, null)
+    if (next) touched.push(next)
+  }
+  return touched
+}
+
+/* ── helpers for the agent loop ──────────────────────────────────── */
+
+/** Append a message. Returns the updated session, or null if it is gone. */
+export function appendMessage(sessionId: string, message: Message): Session | null {
+  return mutate(sessionId, (session) => ({ ...session, messages: [...session.messages, message] }))
+}
+
+/** Shallow-patch one message in place. */
+export function updateMessage(
+  sessionId: string,
+  messageId: string,
+  patch: Partial<Message>
+): Session | null {
+  return mutate(sessionId, (session) => ({
+    ...session,
+    messages: session.messages.map((message) =>
+      message.id === messageId ? { ...message, ...patch, id: message.id } : message
+    )
+  }))
+}
+
+export function toggleMessageReaction(sessionId: string, messageId: string, emoji: string, actor = 'You'): Session | null {
+  const cleanEmoji = emoji.trim().slice(0, 16)
+  const cleanActor = actor.trim().slice(0, 80) || 'You'
+  if (!cleanEmoji) return getSession(sessionId)
+  return mutate(sessionId, (session) => ({
+    ...session,
+    messages: session.messages.map((message) => {
+      if (message.id !== messageId) return message
+      const reactions = { ...(message.reactions ?? {}) }
+      const people = [...(reactions[cleanEmoji] ?? [])]
+      const index = people.indexOf(cleanActor)
+      if (index >= 0) people.splice(index, 1)
+      else people.push(cleanActor)
+      if (people.length > 0) reactions[cleanEmoji] = people
+      else delete reactions[cleanEmoji]
+      return { ...message, reactions }
+    })
+  }))
+}
+
+export function removeMessage(sessionId: string, messageId: string): Session | null {
+  return mutate(sessionId, (session) => ({
+    ...session,
+    messages: session.messages.filter((message) => message.id !== messageId)
+  }))
+}
+
+export function setTodos(sessionId: string, todos: TodoItem[]): Session | null {
+  return mutate(sessionId, (session) => ({ ...session, todos: normaliseTodos(todos) }))
+}
+
+/** Patch arbitrary session fields; identity and creation time stay ours. */
+export function updateSession(id: string, patch: Partial<Session>): Session | null {
+  return mutate(id, (session) => ({ ...session, ...patch, createdAt: session.createdAt }))
+}
+
+/** Conventional name the agent loop resolves `saveSession` by. */
+export const save = saveSession

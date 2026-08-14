@@ -1,0 +1,27 @@
+.ob-toast {
+  position: fixed;
+  z-index: 70;
+  left: 50%;
+  bottom: var(--ob-space-8);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  max-width: min(560px, 80vw);
+  padding: var(--ob-space-2) var(--ob-space-2) var(--ob-space-2) var(--ob-space-5);
+  font-size: var(--ob-font-size-sm);
+  color: var(--ob-text-primary);
+  background: var(--ob-bg-raised-2);
+  border-radius: var(--ob-radius-full);
+  box-shadow: var(--ob-shadow-popover);
+}
+
+.ob-toast-error {
+  color: var(--ob-danger);
+}
+
+.ob-toast-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,102 @@
+/*
+ * The workspace shell: a preset bar above a pane grid.
+ * The grid template itself is set inline from `gridStyleFor`, so this file only
+ * owns the chrome around it — the tiling has exactly one home, in paneLayout.ts.
+ */
+
+.ob-workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.ob-ws-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2-5);
+  padding: var(--ob-space-2) var(--ob-space-4);
+  border-bottom: 1px solid var(--ob-border-subtle);
+}
+
+.ob-ws-name {
+  font-size: var(--ob-font-size-xs);
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ob-text-tertiary);
+}
+
+/* Segmented pill: the presets are one choice, so they share one track. */
+.ob-ws-presets {
+  display: flex;
+  gap: var(--ob-space-0-25);
+  padding: var(--ob-space-0-25);
+  background: var(--ob-bg-raised);
+  border-radius: var(--ob-control-radius);
+}
+
+.ob-ws-preset {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  height: var(--ob-height-xs);
+  padding: 0 var(--ob-space-2-5);
+  border: 0;
+  border-radius: var(--ob-control-radius);
+  background: transparent;
+  color: var(--ob-text-tertiary);
+  font-size: var(--ob-font-size-xs);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--ob-transition-fast),
+    color var(--ob-transition-fast);
+}
+.ob-ws-preset:hover {
+  background: var(--ob-bg-hover);
+  color: var(--ob-text-secondary);
+}
+.ob-ws-preset.is-active {
+  background: var(--ob-bg-active);
+  color: var(--ob-text-primary);
+}
+
+.ob-ws-keys {
+  margin-left: auto;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-disabled);
+  white-space: nowrap;
+}
+
+.ob-ws-grid {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  gap: var(--ob-space-2-5);
+  padding: var(--ob-space-2-5) var(--ob-space-4) var(--ob-space-3);
+}
+
+/* Grid children must be allowed to shrink, or a long line pushes a pane wide. */
+.ob-ws-cell {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+.ob-ws-cell > * {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Narrow windows: keep the glyphs, drop the words, then the key hints. */
+@media (max-width: 1180px) {
+  .ob-ws-keys {
+    display: none;
+  }
+}
+@media (max-width: 960px) {
+  .ob-ws-preset-label {
+    display: none;
+  }
+}

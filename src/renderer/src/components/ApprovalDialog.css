@@ -1,0 +1,143 @@
+.ob-approval-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ob-space-8);
+  background: var(--ob-bg-overlay);
+  backdrop-filter: blur(8px);
+}
+
+.ob-approval {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-4);
+  width: 100%;
+  max-width: 660px;
+  max-height: 100%;
+  padding: var(--ob-card-padding);
+  background: var(--ob-bg-raised);
+  border-radius: var(--ob-card-radius);
+  box-shadow: var(--ob-shadow-modal);
+}
+
+/* The panel takes focus on open so no button can be triggered by a stray key;
+   it is a focus holder, not a control, so it draws no ring of its own. */
+.ob-approval:focus,
+.ob-approval:focus-visible {
+  outline: none;
+}
+
+/* An irreversible action must not look like a routine one. The card carries the
+   danger colour on its own edge, so the difference is visible before any label
+   is read — the pills and the button row alone were identical to a `read_file`
+   prompt. */
+.ob-approval.is-forced {
+  outline: 1px solid var(--ob-danger-secondary);
+  outline-offset: -1px;
+  box-shadow: var(--ob-shadow-modal), inset 0 2px 0 0 var(--ob-danger);
+}
+
+.ob-approval-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ob-space-2);
+}
+.ob-approval-head-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  flex-wrap: wrap;
+}
+.ob-approval-tool {
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+
+/* Which chat and which bot raised this. Requests queue from any session, so
+   this line is the only thing separating "the chat I am reading" from one
+   running in the background. */
+.ob-approval-origin {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+  flex-wrap: wrap;
+  margin: 0;
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+.ob-approval-origin-title {
+  color: var(--ob-text-secondary);
+  font-weight: var(--ob-weight-medium);
+  overflow-wrap: anywhere;
+}
+
+.ob-approval-summary {
+  margin: 0;
+  font-size: var(--ob-font-size-2xl);
+  line-height: 1.2;
+  font-weight: var(--ob-weight-semibold);
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.ob-approval-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ob-space-3);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* This region is a real focus stop — it is tabbed to and scrolled from the
+   keyboard — so it keeps the global `:focus-visible` ring, unlike the panel
+   above, which only holds focus and deliberately suppresses it. */
+
+/*
+ * No `max-height` and no `overflow` of its own: a second scroll container inside
+ * the first, with nothing focusable in it, is unreachable from the keyboard. The
+ * code grows to its full height and `.ob-approval-detail` — which IS focusable —
+ * does the scrolling.
+ */
+.ob-approval-code {
+  margin: 0;
+  padding: var(--ob-space-4);
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-sm);
+  line-height: var(--ob-line-height-sm);
+  color: var(--ob-syntax-fg);
+  background: var(--ob-syntax-bg);
+  border-radius: var(--ob-radius-3xl);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ob-approval-preview {
+  display: block;
+  width: 100%;
+  border-radius: var(--ob-radius-3xl);
+}
+
+.ob-approval-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-4);
+  padding-top: var(--ob-space-2);
+}
+
+.ob-approval-note {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+
+.ob-approval-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-2);
+}

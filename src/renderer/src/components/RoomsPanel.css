@@ -1,0 +1,10 @@
+.ob-rooms-create { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.ob-rooms-list { display: grid; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+.ob-rooms-list li { display: flex; align-items: center; gap: 6px; padding: 10px; border: 1px solid var(--ob-border); border-radius: 10px; }
+.ob-rooms-main { display: grid; gap: 3px; min-width: 0; flex: 1; border: 0; background: transparent; color: var(--ob-text-primary); text-align: left; cursor: pointer; }
+/* `--ob-text-muted` was never defined in tokens.css, so `var()` fell through to
+   the inherited body colour and these secondary lines rendered at full weight
+   against the room name they are meant to sit under. `--ob-text-tertiary` is the
+   token that actually exists — the same correction already made in RichCard.css. */
+.ob-rooms-main span { overflow: hidden; color: var(--ob-text-tertiary); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.ob-rooms-main small { color: var(--ob-text-tertiary); font-size: 10px; }

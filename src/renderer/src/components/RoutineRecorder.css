@@ -1,0 +1,61 @@
+.ob-recorder {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  padding: var(--ob-space-2);
+  background: var(--ob-bg-input);
+  border: 1px solid var(--ob-border-subtle);
+  border-radius: var(--ob-radius-lg);
+}
+
+.ob-recorder.is-active {
+  border-color: var(--ob-danger-secondary);
+  background: var(--ob-danger-quaternary);
+}
+
+.ob-recorder-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.ob-recorder-select {
+  width: auto;
+  min-width: var(--ob-space-20);
+}
+
+.ob-recorder-live {
+  display: flex;
+  align-items: center;
+  gap: var(--ob-space-1-5);
+  font-size: var(--ob-font-size-sm);
+  font-weight: var(--ob-weight-medium);
+  color: var(--ob-danger);
+}
+
+.ob-recorder-dot {
+  width: var(--ob-space-2);
+  height: var(--ob-space-2);
+  border-radius: var(--ob-radius-full);
+  background: var(--ob-danger);
+  animation: ob-recorder-blink 1.2s ease-in-out infinite;
+}
+@keyframes ob-recorder-blink {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.ob-recorder-name {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--ob-font-size-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ob-recorder-count {
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-secondary);
+  font-variant-numeric: tabular-nums;
+}

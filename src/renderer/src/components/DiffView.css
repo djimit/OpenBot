@@ -1,0 +1,96 @@
+.ob-diff {
+  overflow: hidden;
+  background: var(--ob-syntax-bg);
+  border-radius: var(--ob-radius-xl);
+}
+
+.ob-diff-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ob-space-3);
+  height: var(--ob-height-base);
+  padding: 0 var(--ob-space-4);
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
+.ob-diff-path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: rtl;
+  text-align: left;
+}
+.ob-diff-stat {
+  display: flex;
+  gap: var(--ob-space-1-5);
+  flex: none;
+}
+.ob-diff-plus {
+  color: var(--ob-added);
+}
+.ob-diff-minus {
+  color: var(--ob-removed);
+}
+.ob-diff-note {
+  color: var(--ob-text-disabled);
+}
+
+.ob-diff-body {
+  max-height: 340px;
+  overflow: auto;
+  padding-bottom: var(--ob-space-2);
+  font-family: var(--ob-font-mono);
+  font-size: var(--ob-font-size-xs);
+  line-height: var(--ob-line-height-sm);
+}
+
+.ob-diff-row {
+  display: grid;
+  grid-template-columns: var(--ob-space-9) var(--ob-space-9) var(--ob-space-3) 1fr;
+  white-space: pre;
+}
+.ob-diff-no {
+  padding-right: var(--ob-space-1-5);
+  text-align: right;
+  color: var(--ob-text-disabled);
+  user-select: none;
+}
+.ob-diff-sign {
+  text-align: center;
+  user-select: none;
+  color: var(--ob-text-tertiary);
+}
+.ob-diff-text {
+  padding-right: var(--ob-space-2);
+  color: var(--ob-syntax-fg);
+}
+
+.ob-diff-add {
+  background: var(--ob-diff-added-line);
+}
+.ob-diff-add .ob-diff-sign,
+.ob-diff-add .ob-diff-text {
+  color: var(--ob-added);
+}
+.ob-diff-del {
+  background: var(--ob-diff-removed-line);
+}
+.ob-diff-del .ob-diff-sign,
+.ob-diff-del .ob-diff-text {
+  color: var(--ob-removed);
+}
+.ob-diff-hunk {
+  background: var(--ob-bg-input);
+}
+.ob-diff-hunk .ob-diff-text,
+.ob-diff-meta .ob-diff-text {
+  color: var(--ob-text-tertiary);
+}
+
+.ob-diff-more {
+  padding: var(--ob-space-2) var(--ob-space-4);
+  font-size: var(--ob-font-size-xs);
+  color: var(--ob-text-tertiary);
+}
