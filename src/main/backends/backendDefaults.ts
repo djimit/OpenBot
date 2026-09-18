@@ -5,6 +5,7 @@
 
 import { ANTHROPIC_DEFAULT_BASE_URL } from './anthropic'
 import { AGENT_CLI_SPECS } from './cli'
+import { OLLAMA_DEFAULT_BASE_URL } from './ollama'
 import { OPENAI_DEFAULT_BASE_URL } from './openai'
 import { OPENROUTER_DEFAULT_BASE_URL } from './openrouter'
 import { XAI_DEFAULT_BASE_URL } from './xai'
@@ -18,7 +19,8 @@ export const DEFAULT_BASE_URLS: Record<string, string> = {
   openai: OPENAI_DEFAULT_BASE_URL,
   anthropic: ANTHROPIC_DEFAULT_BASE_URL,
   xai: XAI_DEFAULT_BASE_URL,
-  openrouter: OPENROUTER_DEFAULT_BASE_URL
+  openrouter: OPENROUTER_DEFAULT_BASE_URL,
+  ollama: OLLAMA_DEFAULT_BASE_URL
 }
 
 /** Seed for `Settings.backends`. */

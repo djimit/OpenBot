@@ -28,7 +28,8 @@ const GLYPH: Record<string, string> = {
   openai: 'ai',
   anthropic: 'an',
   xai: 'x',
-  openrouter: 'or'
+  openrouter: 'or',
+  ollama: 'ol'
 }
 
 interface BackendMenuProps {

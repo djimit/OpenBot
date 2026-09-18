@@ -12,6 +12,7 @@ import { agentCliBackends } from './cli'
 import { raceTimeout } from './httpClient'
 import { errorMessage } from './httpErrors'
 import { resetHydratedEnv } from './loginShellEnv'
+import { ollamaBackend } from './ollama'
 import { openaiBackend } from './openai'
 import { openrouterBackend } from './openrouter'
 import { readStatusCache, rememberStatuses } from './statusCache'
@@ -33,7 +34,8 @@ export const BACKENDS: Backend[] = [
   openaiBackend,
   anthropicBackend,
   xaiBackend,
-  openrouterBackend
+  openrouterBackend,
+  ollamaBackend
 ]
 
 const BY_ID = new Map(BACKENDS.map((b) => [b.id, b]))
