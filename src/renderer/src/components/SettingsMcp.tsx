@@ -8,6 +8,16 @@ interface SettingsMcpProps {
   settings: Settings
 }
 
+const urlProblem = (raw?: string): string | null => {
+  try {
+    const u = new URL((raw ?? '').trim())
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return 'URL must start with http:// or https://'
+    return u.pathname === '/' ? 'No path in the URL — MCP endpoints usually end in /mcp' : null
+  } catch {
+    return 'Not a valid URL — include http:// or https://'
+  }
+}
+
 const blank = (): McpServerConfig => ({
   id: `mcp-${Date.now()}`,
   name: '',
@@ -201,6 +211,7 @@ export function SettingsMcp({ settings }: SettingsMcpProps): ReactNode {
                 {/* The catalogue card cannot fill this in, so it names what it
                     is waiting for rather than leaving a dead submit button
                     with no explanation. */}
+                {draft.url?.trim() && urlProblem(draft.url) ? <p className="ob-hint">{urlProblem(draft.url)}</p> : null}
                 {draft.provider && !draft.url?.trim() ? (
                   <p className="ob-hint ob-mcp-await">
                     Paste the remote MCP endpoint published by {draft.name || 'this provider'}. It is the only field left
@@ -261,7 +272,7 @@ export function SettingsMcp({ settings }: SettingsMcpProps): ReactNode {
             <button
               type="button"
               className="ob-btn ob-btn-sm ob-btn-primary"
-              disabled={!draft.name.trim() || (draft.transport === 'http' ? !draft.url?.trim() : !draft.command?.trim())}
+              disabled={!draft.name.trim() || (draft.transport === 'http' ? !/^https?:\/\//i.test(draft.url?.trim() ?? '') || !URL.canParse(draft.url!.trim()) : !draft.command?.trim())}
               onClick={() => {
                 write(editingId ? servers.map((server) => server.id === editingId ? draft : server) : [...servers, draft])
                 closeDraft()
