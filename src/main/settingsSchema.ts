@@ -51,7 +51,9 @@ function defaultBackends(): Record<string, BackendConfig> {
     anthropic: { enabled: true, baseUrl: 'https://api.anthropic.com', apiKey: '' },
     openai: { enabled: true, baseUrl: 'https://api.openai.com/v1', apiKey: '' },
     xai: { enabled: true, baseUrl: 'https://api.x.ai/v1', apiKey: '' },
-    openrouter: { enabled: true, baseUrl: 'https://openrouter.ai/api/v1', apiKey: '' }
+    openrouter: { enabled: true, baseUrl: 'https://openrouter.ai/api/v1', apiKey: '' },
+    // Local server — no key.
+    ollama: { enabled: true, baseUrl: 'http://127.0.0.1:11434/v1' }
   }
 }
 
