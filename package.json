@@ -93,7 +93,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^5.2.0",
-    "electron": "^43.5.0",
+    "electron": "43.8.1",
     "electron-builder": "^26.15.3",
     "electron-vite": "^5.0.0",
     "esbuild": "^0.25.12",
@@ -105,8 +105,13 @@
     "vite": "^7.3.7"
   },
   "allowScripts": {
-    "electron@43.4.0": true,
     "esbuild@0.25.12": true,
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "electron@43.8.1": true
+  },
+  "overrides": {
+    "undici@^6": "6.29.1",
+    "undici@^7": "7.30.1",
+    "fast-uri@^3": "3.1.9"
   }
 }
